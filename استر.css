@@ -1,0 +1,112 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    background-color: #1F1F1f;
+}
+
+h2 {
+    text-align: center;
+    font-size: 30px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+h1{
+    text-align: right;
+    margin-right: 30px;
+    color: rgb(147, 63, 63);
+    box-shadow: 20px 15px 20px rgba(0, 0, 0, 0.3);
+    font-size: 20px;
+
+}
+
+p{
+    font-size: 25px;
+    text-align: right;
+    margin-right: 10px;
+    font-weight: bold;
+    text-shadow: 20px 15px 20px rgba;
+    color: #5d4d4d;
+    margin-top: 10%;
+}
+
+hr{
+    color: black;
+}
+.button1 {
+    padding: 12px 24px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    border-radius: 50px;
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    margin: 20px auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    font-size: 18px;
+    font-weight: bold; 
+    text-align: center;
+    letter-spacing: 1px; 
+    color: white;   
+   
+ }
+ 
+ .button1:hover {
+    transform: scale(1.05);
+    box-shadow: 0 100px 150px rgba(0, 0, 0, 0.3);
+ }
+ 
+ .button1:active {
+    background: linear-gradient(90deg, #72095a, #b1b420);
+    transform: scale(0.98);
+    box-shadow: 0 100px 500px rgba(0, 0, 0, 0.3);
+ }
+ 
+ 
+ 
+ .button1:hover{
+    transform: scale(1.05);
+    box-shadow: 0 60px 100px rgba(0, 0, 0, 0.2);
+ }
+
+ .button11 {
+   position: fixed;
+   bottom: 20px;
+   left: 50%;
+   transform: translateX(-50%);
+   padding: 12px 24px;
+   background: #032a41;
+   color: white;
+   border: none;
+   cursor: pointer;
+   font-size: 18px;
+   border-radius: 50px;
+   transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 80%;
+   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+   font-weight: bold;
+   text-align: center;
+   letter-spacing: 1px;
+}
+
+/* تأثير عند التحويم */
+.button11:hover {
+   transform: translateX(-50%) scale(1.08);
+   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* تأثير عند الضغط */
+.button11:active {
+   background: linear-gradient(90deg, #72095a, #040fef);
+   transform: translateX(-50%) scale(0.95); /* تعديل هنا لضبط الموقع */
+   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+}

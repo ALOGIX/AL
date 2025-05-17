@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <title>شركة ALOGIX</title>
+</head>
+<body>
+
+  <img class="img77" id="logo" src="ChatGPT Image 16 مايو 2025، 01_57_25 ص.png">
+  <h1 class="h177">شركة ALOGIX</h1>
+
+  <div class="b77">
+    <button class="button1" onclick="window.location.href='تواصل.html'">مواقع التواصل</button>
+    <button class="button1" onclick="window.location.href='tt.html'">طريقة التسجيل</button>
+    <button class="button1" onclick="window.location.href='معلومات.html'">معلومات الشركة</button>
+    <button class="button1" onclick="window.location.href='انج.html'">انجازات الشركة</button>
+    <button class="button1" onclick="window.location.href='مبرمج.html'">المبرمج</button>
+  </div>
+
+  <footer class="footer">
+    جميع الحقوق محفوظة © 2025
+  </footer>
+  <a href="https://wa.me/9647727220385?text=عندي%20استفسار%20حول%20التسجيل%20او%20الترويج" 
+   target="_blank" style="position:fixed;bottom:20px;right:20px;z-index:999;">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" 
+       width="60" alt="WhatsApp">
+</a>
+
+  <script>
+    let clickCount = 0;
+    let clickTimer;
+
+    document.getElementById("logo").addEventListener("click", () => {
+      clickCount++;
+
+      if (clickCount === 3) {
+        clickCount = 0;
+        // ✅ غيّر هذا الرابط إلى الملف اللي تريده بالضبط:
+        window.location.href = "logo1.html";
+      }
+
+      clearTimeout(clickTimer);
+      clickTimer = setTimeout(() => {
+        clickCount = 0;
+      }, 1500);
+    });
+  </script>
+
+</body>
+</html>

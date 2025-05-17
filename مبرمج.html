@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="مبرمج.css">
+    <title>مبرمج</title>
+</head>
+<body>
+
+    <img class="img77" src="photo_2025-05-16_03-25-12.jpg">
+
+    <div>
+        <h3>المبرمج : <span class="highlight">علي عمار</span></h3>
+        <h3>للتواصل مع المبرمج :</h3>
+       <button class="button1" onclick="window.location.href='https://www.instagram.com/_zjeo/'">الانستكرام</button>
+       <button class="button19" onclick="window.location.href='https://www.facebook.com/lymar.223593/about?locale=ar_AR'">فيسبوك</button>
+         </footer>
+  <a href="https://wa.me/9647727220385?text=عندي%20استفسار%20حول%20التسجيل%20او%20الترويج" 
+   target="_blank" style="position:fixed;bottom:20px;right:20px;z-index:999;">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" 
+       width="60" alt="WhatsApp">
+</a>
+       <button class="button1999"  onclick="window.location.href='مشاريع.html'">مشاريع المبرمج</button>
+
+    </div>
+
+    <button class="button111" onclick="window.location.href='index.html'">رجوع الى صفحة الاساسية
+    </button>
+
+    <script>
+
+document.addEventListener("DOMContentLoaded", function () {
+    let cards = document.querySelectorAll(".card");
+
+    cards.forEach(card => {
+        card.addEventListener("mouseenter", () => {
+            card.style.transform = "scale(1.05)";
+            card.style.transition = "0.3s";
+        });
+
+        card.addEventListener("mouseleave", () => {
+            card.style.transform = "scale(1)";
+        });
+    });
+});
+
+
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>ALOGIX | تسجيل دخول و تقسيم مبلغ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      direction: rtl;
+      background: #1c1c1c;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .centered {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-box, .container {
+      background: #2e2e2e;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+      width: 90%;
+      max-width: 500px;
+    }
+
+    h2, h3 {
+      color: #00e676;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #555;
+      padding-bottom: 10px;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    input {
+      background: #444;
+      color: #fff;
+    }
+
+    button {
+      background: #27ae60;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #219150;
+    }
+
+    .message {
+      margin-top: 10px;
+      color: red;
+    }
+
+    #mainContent {
+      display: none;
+      background: #f5f5f5;
+      color: #000;
+      padding: 40px;
+      margin: 20px auto;
+      border-radius: 12px;
+      max-width: 700px;
+    }
+
+    .result {
+      margin-top: 20px;
+      background: #f8f8f8;
+      padding: 15px;
+      border: 1px dashed #ccc;
+      border-radius: 8px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    table, th, td {
+      border: 1px solid #aaa;
+    }
+
+    th {
+      background-color: #2c3e50;
+      color: white;
+      padding: 12px;
+    }
+
+    td {
+      padding: 10px;
+      text-align: center;
+      background-color: #fafafa;
+    }
+
+    .delete-btn {
+      background-color: #c0392b;
+      border: none;
+      padding: 5px 10px;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .delete-btn:hover {
+      background-color: #a93226;
+    }
+  </style>
+</head>
+<body>
+  <div class="centered">
+    <div class="login-box" id="loginBox">
+      <h2>تسجيل دخول ALOGIX</h2>
+      <input type="text" id="username" placeholder="اسم المستخدم">
+      <input type="password" id="password" placeholder="رمز الدخول">
+      <button onclick="login()">دخول</button>
+      <div class="message" id="message"></div>
+    </div>
+  </div>
+
+  <div class="container" id="mainContent">
+    <h2>تقسيم مبلغ مالي</h2>
+    <input type="number" id="amount" placeholder="ادخل المبلغ الكلي">
+    <input type="number" id="people" placeholder="عدد الأشخاص">
+    <input type="number" id="specialPercent" placeholder="نسبة الشخص المميز (%)">
+    <button onclick="calculate()">احسب و احفظ</button>
+
+    <label><input type="checkbox" id="saveToggle" checked> حفظ البيانات تلقائياً</label>
+    <button onclick="downloadData()">📥 حفظ إلى ملف</button>
+    <button onclick="clearData()">🗑️ مسح جميع البيانات</button>
+
+    <div class="result" id="result"></div>
+
+    <h3>سجل العمليات السابقة</h3>
+    <table id="history">
+      <tr>
+        <th>التاريخ</th>
+        <th>المبلغ</th>
+        <th>عدد الأشخاص</th>
+        <th>نسبة المميز</th>
+        <th>التوزيع</th>
+        <th>حذف</th>
+      </tr>
+    </table>
+  </div>
+
+  <button class="button111" onclick="window.location.href='index.html'">رجوع الى صفحة الاساسية
+
+  <script>
+    // تشفير النصوص العربية
+    function encodeBase64Unicode(str) {
+      return btoa(unescape(encodeURIComponent(str)));
+    }
+
+    const hashedUser = encodeBase64Unicode("كيدوو");
+    const hashedPass = encodeBase64Unicode("n96");
+    const ALLOWED_DEVICE_KEY = "alogixAllowedDevice";
+
+    // إنشاء هوية الجهاز
+    if (!localStorage.getItem("deviceId")) {
+      localStorage.setItem("deviceId", crypto.randomUUID());
+    }
+
+    function login() {
+      const user = document.getElementById("username").value.trim();
+      const pass = document.getElementById("password").value.trim();
+      const msg = document.getElementById("message");
+
+      const currentDevice = localStorage.getItem("deviceId");
+      const allowedDevice = localStorage.getItem(ALLOWED_DEVICE_KEY);
+
+      if (!allowedDevice) {
+        localStorage.setItem(ALLOWED_DEVICE_KEY, currentDevice);
+      }
+
+      if (allowedDevice && allowedDevice !== currentDevice) {
+        msg.textContent = "❌ هذا الجهاز غير مصرح له بالدخول.";
+        return;
+      }
+
+      if (encodeBase64Unicode(user) === hashedUser && encodeBase64Unicode(pass) === hashedPass) {
+        const accessLogs = JSON.parse(localStorage.getItem("alogixAccess") || "[]");
+        accessLogs.push({
+          deviceId: currentDevice,
+          time: new Date().toLocaleString()
+        });
+        localStorage.setItem("alogixAccess", JSON.stringify(accessLogs));
+
+        document.getElementById("loginBox").style.display = "none";
+        document.querySelector(".centered").style.display = "none";
+        document.getElementById("mainContent").style.display = "block";
+        loadHistory();
+      } else {
+        msg.textContent = "❌ اسم المستخدم أو الرمز غير صحيح";
+      }
+    }
+
+    function loadHistory() {
+      let history = JSON.parse(localStorage.getItem('splitHistory')) || [];
+      history.forEach(row => addToTable(row));
+    }
+
+    function calculate() {
+      const amount = parseFloat(document.getElementById('amount').value);
+      const people = parseInt(document.getElementById('people').value);
+      const specialPercent = parseFloat(document.getElementById('specialPercent').value);
+      const saveEnabled = document.getElementById('saveToggle').checked;
+
+      if (isNaN(amount) || isNaN(people) || isNaN(specialPercent) || people < 2 || specialPercent >= 100) {
+        alert("تحقق من القيم المدخلة!");
+        return;
+      }
+
+      const specialShare = (specialPercent / 100) * amount;
+      const remaining = amount - specialShare;
+      const otherShare = remaining / (people - 1);
+
+      let output = `🟢 الشخص المميز: ${specialShare.toFixed(2)} دينار<br>`;
+      for (let i = 1; i < people; i++) {
+        output += `شخص ${i}: ${otherShare.toFixed(2)} دينار<br>`;
+      }
+      document.getElementById("result").innerHTML = output;
+
+      const now = new Date().toLocaleString();
+      const distribution = {
+        date: now,
+        amount,
+        people,
+        specialPercent: specialPercent + "%",
+        dist: `مميز: ${specialShare.toFixed(2)} | ` +
+              Array.from({ length: people - 1 }, (_, i) => `شخص ${i + 1}: ${otherShare.toFixed(2)}`).join(" | ")
+      };
+
+      let history = JSON.parse(localStorage.getItem('splitHistory')) || [];
+      if (saveEnabled) {
+        history.push(distribution);
+        localStorage.setItem('splitHistory', JSON.stringify(history));
+      }
+      addToTable(distribution);
+    }
+
+    function addToTable(data) {
+      const table = document.getElementById("history");
+      const row = table.insertRow(1);
+      row.insertCell(0).textContent = data.date;
+      row.insertCell(1).textContent = data.amount;
+      row.insertCell(2).textContent = data.people;
+      row.insertCell(3).textContent = data.specialPercent;
+      row.insertCell(4).textContent = data.dist;
+
+      const delCell = row.insertCell(5);
+      const delBtn = document.createElement("button");
+      delBtn.textContent = "🗑️ حذف";
+      delBtn.className = "delete-btn";
+      delBtn.onclick = function () {
+        deleteRow(data);
+        row.remove();
+      };
+      delCell.appendChild(delBtn);
+    }
+
+    function deleteRow(targetData) {
+      let history = JSON.parse(localStorage.getItem('splitHistory')) || [];
+      history = history.filter(entry =>
+        !(entry.date === targetData.date &&
+          entry.amount === targetData.amount &&
+          entry.people === targetData.people &&
+          entry.specialPercent === targetData.specialPercent &&
+          entry.dist === targetData.dist)
+      );
+      localStorage.setItem('splitHistory', JSON.stringify(history));
+    }
+
+    function clearData() {
+      if (confirm("هل أنت متأكد من مسح جميع البيانات؟")) {
+        localStorage.removeItem('splitHistory');
+        const table = document.getElementById("history");
+        while (table.rows.length > 1) {
+          table.deleteRow(1);
+        }
+      }
+    }
+
+    function downloadData() {
+      const data = localStorage.getItem('splitHistory');
+      if (!data) {
+        alert("لا توجد بيانات محفوظة!");
+        return;
+      }
+
+      const blob = new Blob([data], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "بيانات-التقسيم.json";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>

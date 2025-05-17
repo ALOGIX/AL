@@ -1,0 +1,290 @@
+body {
+    font-family: Arial, sans-serif;
+    direction: rtl;
+    background: #1F1F1F;
+    text-align: center;
+    padding: 50px;
+    font-family: 'Cairo', sans-serif;
+
+.img77{
+
+    width: 30%;
+    height: 35%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    object-fit: cover;
+    border-radius: 80%;
+    display: block;
+    box-shadow: 20px 15px 20px rgba(0, 0, 0, 0.3);
+    margin-top: 3%;
+    margin-bottom: 3%;
+      
+      
+
+}
+}
+
+h2, h3 {
+    color: #333;
+    font-weight: bold;
+}
+
+h2, h3 {
+    color: #ba214c;
+    font-weight: bold;
+    font-size: 20px;
+}
+.highlight {
+    color: #446e3c;
+    font-weight: bold;
+}
+ .button111 {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 24px;
+    background: #012032;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 50px;
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    font-weight: bold;
+    text-align: center;
+    letter-spacing: 1px;
+ }
+ 
+ /* تأثير عند التحويم */
+ .button111:hover {
+    transform: translateX(-50%) scale(1.08);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+ }
+ 
+ /* تأثير عند الضغط */
+ .button111:active {
+    background: linear-gradient(90deg, #72095a, #040fef);
+    transform: translateX(-50%) scale(0.95); /* تعديل هنا لضبط الموقع */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+ }
+.button12 {
+    padding: 12px 24px;
+    background: linear-gradient(90deg, #0a440c, #1f0843);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    border-radius: 50px;
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    margin: 20px auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        font-size: 18px;
+        font-weight: bold; 
+        text-align: center;
+        letter-spacing: 1px; 
+        color: white;    
+}
+
+.button12:hover {
+    transform: scale(1.05);
+    box-shadow: 0 100px 150px rgba(0, 0, 0, 0.3);
+}
+
+.button12:active {
+    background: linear-gradient(90deg, #e41220, #c0520d);
+    transform: scale(0.98);
+    box-shadow: 0 100px 500px rgba(0, 0, 0, 0.3);
+}
+
+
+
+.button12:hover{
+    transform: scale(1.05);
+    box-shadow: 0 60px 100px rgba(0, 0, 0, 0.2);
+}
+
+button12{
+    text-align: center;
+    font-size: 30px;
+    text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.5);
+}
+.button1 {
+    padding: 12px 24px;
+    background: linear-gradient(45deg, #753b0e, #780b3c, #540d70, #0e1775)
+;
+    color: #508755;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    border-radius: 50px;
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    margin: 20px auto;
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
+        font-size: 18px;
+        font-weight: bold; 
+        text-align: center;
+        letter-spacing: 1px; 
+        font-family: 'Cairo', sans-serif;
+            
+}
+
+.button1:hover {
+    transform: scale(1.05);
+    box-shadow: 0 100px 150px rgba(0, 0, 0, 0.3);
+}
+
+.button1:active {
+    background:#5d0303,;
+    transform: scale(0.98);
+    box-shadow: 0 1000px 5000px rgba(0, 0, 0, 0.3);
+}
+
+
+
+.button1:hover{
+    transform: scale(1.05);
+    box-shadow: 0 60px 100px rgba(0, 0, 0, 0.2);
+}
+.button19 {
+    padding: 12px 24px;
+    background: linear-gradient(45deg,  #02083e, #0e1775)
+;
+    color: #748575;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    border-radius: 50px;
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    margin: 20px auto;
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
+        font-size: 18px;
+        font-weight: bold; 
+        text-align: center;
+        letter-spacing: 1px; 
+        font-family: 'Cairo', sans-serif;
+            
+}
+
+.button19:hover {
+    transform: scale(1.05);
+    box-shadow: 0 100px 150px rgba(0, 0, 0, 0.3);
+}
+
+.button19:active {
+    background:#5d0303,;
+    transform: scale(0.98);
+    box-shadow: 0 1000px 5000px rgba(0, 0, 0, 0.3);
+}
+
+
+
+.button19:hover{
+    transform: scale(1.05);
+    box-shadow: 0 60px 100px rgba(0, 0, 0, 0.2);
+}
+
+.button199 {
+    padding: 12px 24px;
+    background: linear-gradient(45deg,  #025704, #10d247)
+;
+    color: #0b1b29;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    border-radius: 50px;
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    margin: 20px auto;
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
+        font-size: 18px;
+        font-weight: bold; 
+        text-align: center;
+        letter-spacing: 1px; 
+        font-family: 'Cairo', sans-serif;
+            
+}
+
+.button199:hover {
+    transform: scale(1.05);
+    box-shadow: 0 100px 150px rgba(0, 0, 0, 0.3);
+}
+
+.button199:active {
+    background:#032a41,;
+    transform: scale(0.98);
+    box-shadow: 0 1000px 5000px rgba(0, 0, 0, 0.3);
+}
+
+
+
+.button199:hover{
+    transform: scale(1.05);
+    box-shadow: 0 60px 100px rgba(0, 0, 0, 0.2);
+}
+
+.button1999 {
+    padding: 12px 24px;
+    background: #032a41;
+    color: #507d65;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    border-radius: 50px;
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    margin: 20px auto;
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
+        font-size: 18px;
+        font-weight: bold; 
+        text-align: center;
+        letter-spacing: 1px; 
+        font-family: 'Cairo', sans-serif;
+            
+}
+
+.button1999:hover {
+    transform: scale(1.05);
+    box-shadow: 0 100px 150px rgba(0, 0, 0, 0.3);
+}
+
+.button1999:active {
+    background:#5d0303,;
+    transform: scale(0.98);
+    box-shadow: 0 1000px 5000px rgba(0, 0, 0, 0.3);
+}
+
+
+
+.button1999:hover{
+    transform: scale(1.05);
+    box-shadow: 0 60px 100px rgba(0, 0, 0, 0.2);
+}
+
+
+

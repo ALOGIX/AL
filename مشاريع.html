@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="مبرمج.css">
+    <title>Document</title>
+</head>
+<body>
+
+    <div class="card">
+        <h1>1</h1>
+        <h3>المبرمج المنفذ: <span class="highlight">علي عمار</span></h3>
+        <h3>نوع المشروع : <span class="highlight">موقع لمادة الاتصالات</span></h3>
+       <button class="button199" onclick="window.open('https://kedo911.github.io/Communications7/', '_blank')">مشاهدة المشروع</button>
+
+         <h1>2</h1>
+        <h3>المبرمج المنفذ: <span class="highlight">علي عمار</span></h3>
+        <h3>نوع المشروع : <span class="highlight">موقع لمدرسة مهنية</span></h3>
+          </footer>
+  <a href="https://wa.me/9647727220385?text=عندي%20استفسار%20حول%20التسجيل%20او%20الترويج" 
+   target="_blank" style="position:fixed;bottom:20px;right:20px;z-index:999;">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" 
+       width="60" alt="WhatsApp">
+</a>
+       
+<button class="button199" onclick="window.open('https://kedo911.github.io/-GG/', '_blank')">مشاهدة المشروع</button>
+
+
+
+    </div>
+    <button class="button111" onclick="window.location.href='index.html'">رجوع الى صفحة الاساسية</button>
+
+    <script>
+
+document.addEventListener("DOMContentLoaded", function () {
+    let cards = document.querySelectorAll(".card");
+
+    cards.forEach(card => {
+        card.addEventListener("mouseenter", () => {
+            card.style.transform = "scale(1.05)";
+            card.style.transition = "0.3s";
+        });
+
+        card.addEventListener("mouseleave", () => {
+            card.style.transform = "scale(1)";
+        });
+    });
+});
+
+
+    </script>
+    
+</body>
+</html>

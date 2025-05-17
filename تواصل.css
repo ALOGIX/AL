@@ -1,0 +1,150 @@
+body{
+    background-color: rgb(0, 0, 0);
+}
+
+h1{
+    text-align: center;
+    margin-bottom: 5px;
+    color: blueviolet;
+
+      
+}
+  
+img{
+    width: 100px;
+    height: 200px;
+    margin-left: 15%;
+
+}
+
+button{
+        text-align: center;
+        font-size: 30px;
+        text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.5);
+    }
+    
+    .button1 {
+        padding: 12px 24px;
+        background: linear-gradient(90deg, #0a440c, #1f0843);
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 20px;
+        border-radius: 50px;
+        transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 80%;
+        margin: 20px auto;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            font-size: 18px;
+            font-weight: bold; 
+            text-align: center;
+            letter-spacing: 1px; 
+            color: white;    
+    }
+    
+    .button1:hover {
+        transform: scale(1.05);
+        box-shadow: 0 100px 150px rgba(0, 0, 0, 0.3);
+    }
+    
+    .button1:active {
+        background: linear-gradient(90deg, #e41220, #c0520d);
+        transform: scale(0.98);
+        box-shadow: 0 100px 500px rgba(0, 0, 0, 0.3);
+    }
+    
+    
+    
+    .button1:hover{
+        transform: scale(1.05);
+        box-shadow: 0 60px 100px rgba(0, 0, 0, 0.2);
+    }
+    
+    button1{
+        text-align: center;
+        font-size: 30px;
+        text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.5);
+    }
+    .button11 {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 12px 24px;
+        background: #1F1F1F;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+        border-radius: 50px;
+        transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 80%;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        font-weight: bold;
+        text-align: center;
+        letter-spacing: 1px;
+    }
+    
+    /* تأثير عند التحويم */
+    .button11:hover {
+        transform: translateX(-50%) scale(1.08);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* تأثير عند الضغط */
+    .button11:active {
+        background: linear-gradient(90deg, #72095a, #040fef);
+        transform: translateX(-50%) scale(0.95); /* تعديل هنا لضبط الموقع */
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    }
+    .button19 {
+    padding: 12px 24px;
+    background: linear-gradient(45deg, #753b0e, #780b3c, #540d70, #0e1775)
+;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    border-radius: 50px;
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    margin: 20px auto;
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
+        font-size: 18px;
+        font-weight: bold; 
+        text-align: center;
+        letter-spacing: 1px; 
+
+            
+}
+
+.button19:hover {
+    transform: scale(1.05);
+    box-shadow: 0 100px 150px rgba(0, 0, 0, 0.3);
+}
+
+.button19:active {
+    background:#5d0303,;
+    transform: scale(0.98);
+    box-shadow: 0 1000px 5000px rgba(0, 0, 0, 0.3);
+}
+
+
+
+.button19:hover{
+    transform: scale(1.05);
+    box-shadow: 0 60px 100px rgba(0, 0, 0, 0.2);
+}
+
+    
+    
+

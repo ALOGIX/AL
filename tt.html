@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>تسجيل المحل | ALOGIX</title>
+  <link rel="stylesheet" href="tt.css">
+</head>
+<body>
+
+<div style="background:#032a41;color:#fff;padding:15px;border-radius:8px;margin-bottom:20px;">
+  ℹ️ يرجى تعبئة النموذج حسب نوع الخدمة:
+  <ul>
+    <li>💼 "تسجيل": خاص بأصحاب المحلات أو البيجات</li>
+    <li>📢 "ترويج فقط": فقط لترويج منتج</li>
+    <li>💰 العملة: دولار عبر رصيد اسياسيل</li>
+    <li>✅ بعد الضغط على "دفع وتسجيل" سيتم تحويلك تلقائياً إلى واتساب</li>
+  </ul>
+</div>
+
+<h2>نموذج التسجيل</h2>
+
+<label for="store-name">📌 اسم المحل أو البيج:</label>
+<input type="text" id="store-name" placeholder="اكتب اسم محلك أو بيجك">
+
+<label for="contact-number">📞 رقم التواصل:</label>
+<input type="text" id="contact-number" placeholder="مثال: 077xxxxxxxx">
+
+<label for="mode">🧭 نوع العملية:</label>
+<select id="mode" onchange="toggleSections()">
+  <option value="؟">-- اختر --</option>
+  <option value="register">تسجيل</option>
+  <option value="promote">ترويج فقط</option>
+</select>
+
+<div id="register-section" class="section" style="display:none;">
+  <label for="package">🎁 اختر الباقة:</label>
+  <select id="package">
+    <option value="؟">-- اختر --</option>
+    <option value="100">باقة 100$ (كول سنتر + مندوبين + توصيل)</option>
+    <option value="150">باقة 150$ (تشمل أعلاه + تصوير + تصميم)</option>
+  </select>
+
+  <label for="promotion-needed">⭐ هل تحتاج ترويج لمنتج؟</label>
+  <select id="promotion-needed">
+    <option value="؟">-- اختر --</option>
+    <option value="نعم">نعم</option>
+    <option value="لا">لا</option>
+  </select>
+
+  <div id="promo-price-section" style="display:none;">
+    <label for="product-price">💰 سعر المنتج بالدولار:</label>
+    <input type="number" id="product-price" placeholder="مثال: 25">
+  </div>
+</div>
+
+<div id="promote-section" class="section" style="display:none;">
+  <label for="only-promo-price">💰 سعر المنتج الذي تريد ترويجه:</label>
+  <input type="number" id="only-promo-price" placeholder="مثال: 30">
+</div>
+
+<button onclick="sendToWhatsApp()">💵 دفع وتسجيل</button>
+
+<a href="https://wa.me/9647727220385?text=عندي%20استفسار%20حول%20التسجيل%20او%20الترويج" 
+   target="_blank" style="position:fixed;bottom:20px;right:20px;z-index:999;">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" 
+       width="60" alt="WhatsApp">
+</a>
+  <button class="button1" onclick="window.location.href='index.html'">رجوع الى صفحة الاساسية</button>
+
+
+
+<script>
+  function toggleSections() {
+    const mode = document.getElementById("mode").value;
+    document.getElementById("register-section").style.display = mode === "register" ? "block" : "none";
+    document.getElementById("promote-section").style.display = mode === "promote" ? "block" : "none";
+  }
+
+  document.getElementById("promotion-needed").addEventListener("change", function () {
+    document.getElementById("promo-price-section").style.display = this.value === "نعم" ? "block" : "none";
+  });
+
+  function sendToWhatsApp() {
+    const storeName = document.getElementById("store-name").value.trim();
+    const contactNumber = document.getElementById("contact-number").value.trim();
+    const mode = document.getElementById("mode").value;
+
+    if (!storeName || !contactNumber) {
+      alert("يرجى إدخال اسم البيج ورقم التواصل.");
+      return;
+    }
+
+    let message = "🔥 طلب جديد:\n\n";
+    message += `📌 اسم البيج: ${storeName}\n📞 رقم التواصل: ${contactNumber}\n\n`;
+
+    if (mode === "register") {
+      const pkg = document.getElementById("package").value;
+      const promo = document.getElementById("promotion-needed").value;
+      message += `🔹 العملية: تسجيل\n🔸 الباقة: ${pkg}$\n⭐ ترويج: ${promo}`;
+
+      if (promo === "نعم") {
+        const price = parseFloat(document.getElementById("product-price").value || 0);
+        if (!price) {
+          alert("يرجى إدخال سعر المنتج.");
+          return;
+        }
+        const finalPrice = price + 3;
+        message += `\n💰 سعر المنتج: ${price}$\n📈 السعر بعد الترويج: ${finalPrice}$`;
+      }
+
+    } else if (mode === "promote") {
+      const price = parseFloat(document.getElementById("only-promo-price").value || 0);
+      if (!price) {
+        alert("يرجى إدخال سعر المنتج.");
+        return;
+      }
+      const finalPrice = price + 3;
+      message += `🔹 العملية: ترويج فقط\n💰 سعر المنتج: ${price}$\n📈 السعر بعد الترويج: ${finalPrice}$`;
+    }
+
+    const encodedMessage = encodeURIComponent(message);
+    const phone = "07727220385";
+    window.open(`https://wa.me/964${phone.slice(1)}?text=${encodedMessage}`, "_blank");
+  }
+
+    function toggleSections() {
+    const mode = document.getElementById("mode").value;
+    document.getElementById("register-section").style.display = mode === "register" ? "block" : "none";
+    document.getElementById("promote-section").style.display = mode === "promote" ? "block" : "none";
+  }
+
+  document.getElementById("promotion-needed").addEventListener("change", function () {
+    document.getElementById("promo-price-section").style.display = this.value === "نعم" ? "block" : "none";
+  });
+
+  async function getUserIP() {
+    try {
+      const res = await fetch("https://api.ipify.org?format=json");
+      const data = await res.json();
+      return data.ip;
+    } catch {
+      return "غير معروف";
+    }
+  }
+
+  async function sendToWhatsApp() {
+    const storeName = document.getElementById("store-name").value.trim();
+    const contactNumber = document.getElementById("contact-number").value.trim();
+    const mode = document.getElementById("mode").value;
+
+    if (!storeName || !contactNumber || mode === "؟") {
+      alert("يرجى تعبئة كافة الحقول المطلوبة.");
+      return;
+    }
+
+    const userIP = await getUserIP();
+    let message = "🔥 طلب جديد للتسجيل:\n\n";
+    message += `📌 اسم البيج/المحل: ${storeName}\n📞 رقم التواصل: ${contactNumber}\n🌐 IP: ${userIP}\n`;
+
+    let total = 0;
+
+    if (mode === "register") {
+      const pkg = document.getElementById("package").value;
+      const promo = document.getElementById("promotion-needed").value;
+
+      if (pkg === "؟" || promo === "؟") {
+        alert("يرجى اختيار الباقة والترويج.");
+        return;
+      }
+
+      const packagePrice = parseFloat(pkg);
+      message += `\n🔹 العملية: تسجيل\n🔸 الباقة: ${packagePrice}$\n⭐ هل تحتاج ترويج؟ ${promo}`;
+      total += packagePrice;
+
+      if (promo === "نعم") {
+        const promoValue = parseFloat(document.getElementById("product-price").value);
+        if (!promoValue || promoValue <= 0) {
+          alert("يرجى إدخال سعر منتج الترويج.");
+          return;
+        }
+        const promoCost = Math.ceil((promoValue / 5) * 2);
+        total += promoCost;
+        message += `\n💰 سعر المنتج: ${promoValue}$\n📢 تكلفة الترويج: ${promoCost}$`;
+      }
+
+    } else if (mode === "promote") {
+      const promoValue = parseFloat(document.getElementById("only-promo-price").value);
+      if (!promoValue || promoValue <= 0) {
+        alert("يرجى إدخال سعر المنتج.");
+        return;
+      }
+      const promoCost = Math.ceil((promoValue / 5) * 2);
+      total += promoCost;
+      message += `\n🔹 العملية: ترويج فقط\n💰 سعر المنتج: ${promoValue}$\n📢 تكلفة الترويج: ${promoCost}$`;
+    }
+
+    message += `\n\n💵 السعر الكلي: ${total}$`;
+
+    const phone = "07727220385";
+    const encodedMessage = encodeURIComponent(message);
+    const link = `https://wa.me/964${phone.slice(1)}?text=${encodedMessage}`;
+    window.open(link, "_blank");
+
+    setTimeout(() => {
+      alert("✅ تم تسجيل الطلب بنجاح.\n📍 IP: " + userIP);
+    }, 1000);
+  }
+</script>
+
+</body>
+</html>
