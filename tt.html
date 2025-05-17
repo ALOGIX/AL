@@ -1,211 +1,237 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>نموذج تسجيل المحل</title>
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- Axios -->
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<!-- SweetAlert2 -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<style>
-  body {
-    background: #121212;
-    color: #eee;
-    font-family: Arial, sans-serif;
-  }
-  form {
-    max-width: 500px;
-    margin: 2rem auto;
-    background: #222;
-    padding: 20px;
-    border-radius: 8px;
-  }
-  label {
-    display: block;
-    margin: 10px 0 5px;
-  }
-  select, input, button {
-    width: 100%;
-    padding: 8px;
-    background: #333;
-    border: none;
-    color: #eee;
-    border-radius: 5px;
-    margin-bottom: 15px;
-  }
-  button {
-    background: #0a84ff;
-    cursor: pointer;
-    font-weight: bold;
-  }
-</style>
+  <meta charset="UTF-8">
+  <title>تسجيل المحل</title>
+  <style>
+    body {
+      background-color: #1f1f1f;
+      color: white;
+      font-family: sans-serif;
+      padding: 20px;
+    }
+    label, select, input, textarea, button {
+      display: block;
+      width: 100%;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    select, input, textarea {
+      padding: 8px;
+      background-color: #2a2a2a;
+      border: 1px solid #444;
+      color: white;
+    }
+    button {
+      background-color: #25d366;
+      border: none;
+      padding: 10px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
 
-<form id="registerForm">
-  <h2>تسجيل المحل / البيج</h2>
+<h2>📋 نموذج تسجيل المحل</h2>
 
-  <label for="name">اسم المحل / البيج</label>
-  <input type="text" id="name" name="name" placeholder="أدخل اسم المحل" required />
+<form onsubmit="event.preventDefault(); sendToWhatsApp();">
+  <label>🌟 اسم المحل:</label>
+  <input type="text" id="store-name" required>
 
-  <label for="phone">رقم الهاتف</label>
-  <input type="tel" id="phone" name="phone" placeholder="مثال: 077xxxxxxxx" required />
+  <label>📞 رقم الهاتف:</label>
+  <input type="text" id="contact-number" required>
 
-  <label for="province">اختر المحافظة</label>
-  <select id="province" name="province" required>
+  <label>🛠️ نوع الطلب:</label>
+  <select id="mode" onchange="toggleSections()" required>
+    <option value="">-- اختر --</option>
+    <option value="register">تسجيل</option>
+    <option value="promote">ترويج فقط</option>
+  </select>
+
+  <label>📍 المحافظة:</label>
+  <select id="province" onchange="onProvinceChange()" required>
     <option value="">-- اختر المحافظة --</option>
     <option value="بغداد">بغداد</option>
     <option value="البصرة">البصرة</option>
-    <option value="النجف">النجف</option>
     <option value="نينوى">نينوى</option>
-    <option value="كركوك">كركوك</option>
-    <option value="صلاح الدين">صلاح الدين</option>
-    <option value="ديالى">ديالى</option>
-    <option value="ميسان">ميسان</option>
+    <option value="النجف">النجف</option>
     <option value="ذي قار">ذي قار</option>
-    <option value="القادسية">القادسية</option>
-    <option value="بابل">بابل</option>
-    <option value="الأنبار">الأنبار</option>
-    <option value="الكرمة">الكرمة</option>
-    <option value="واسط">واسط</option>
-    <option value="الحلة">الحلة</option>
-    <option value="الديوانية">الديوانية</option>
-    <option value="أربيل">أربيل</option>
+    <option value="اربيل">أربيل</option>
+    <option value="الانبار">الأنبار</option>
+    <option value="كركوك">كركوك</option>
     <option value="السليمانية">السليمانية</option>
     <option value="دهوك">دهوك</option>
-    <!-- يمكن إضافة المزيد إذا تريد -->
+    <option value="بابل">بابل</option>
+    <option value="كربلاء">كربلاء</option>
+    <option value="واسط">واسط</option>
+    <option value="صلاح الدين">صلاح الدين</option>
+    <option value="ميسان">ميسان</option>
+    <option value="المثنى">المثنى</option>
+    <option value="القادسية">القادسية</option>
   </select>
 
-  <label for="baghdad_side" id="baghdadSideLabel" style="display:none;">اختر جانب بغداد</label>
-  <select id="baghdad_side" name="baghdad_side" style="display:none;">
-    <option value="">-- اختر --</option>
-    <option value="الرصافة">الرصافة</option>
-    <option value="الكرخ">الكرخ</option>
-  </select>
+  <div id="baghdad-options" style="display:none;">
+    <label>⬅️ الجهة:</label>
+    <select id="baghdad-side" onchange="loadBaghdadAreas()">
+      <option value="">-- اختر --</option>
+      <option value="رصافة">رصافة</option>
+      <option value="كرخ">كرخ</option>
+    </select>
 
-  <label for="baghdad_area" id="baghdadAreaLabel" style="display:none;">اختر المنطقة</label>
-  <select id="baghdad_area" name="baghdad_area" style="display:none;">
-    <option value="">-- اختر --</option>
-    <option value="الأولى">الأولى</option>
-    <option value="الثانية">الثانية</option>
-    <option value="الثالثة">الثالثة</option>
-  </select>
+    <label>📌 المنطقة:</label>
+    <select id="baghdad-area" onchange="checkBaghdadArea()">
+      <option value="">-- اختر --</option>
+    </select>
+  </div>
 
-  <label for="package">اختر الباقة</label>
-  <select id="package" name="package" required>
-    <option value="">-- اختر الباقة --</option>
-    <option value="100">100$ - خدمات كول سنتر، مندوبين، توصيل</option>
-    <!-- باقة 150$ تظهر فقط في رصافة الثالثة -->
-    <option value="150" id="package150" style="display:none;">150$ - تشمل 100$ + تصوير احترافي وتصميم صور</option>
-  </select>
+  <label>📌 العنوان التفصيلي:</label>
+  <textarea id="address" required></textarea>
 
-  <label for="promo">ترويج المنتجات (3$ هامش ربح)</label>
-  <select id="promo" name="promo" required>
-    <option value="لا">لا</option>
-    <option value="نعم">نعم</option>
-  </select>
+  <div id="register-section" style="display:none;">
+    <label>💼 اختر الباقة:</label>
+    <select id="package">
+      <option value="">-- اختر الباقة --</option>
+      <option value="100">باقة 100$ (كول سنتر + مندوبين + توصيل)</option>
+      <option value="150" style="display:none;">باقة 150$ (كل ما سبق + تصوير وتصميم)</option>
+    </select>
 
-  <label for="address">العنوان التفصيلي</label>
-  <input type="text" id="address" name="address" placeholder="أدخل العنوان بدقة مع التفاصيل (شارع، بناية، طابق)" required />
+    <label>📢 هل تحتاج ترويج؟</label>
+    <select id="promotion-needed" onchange="togglePromoPrice()">
+      <option value="">-- اختر --</option>
+      <option value="نعم">نعم</option>
+      <option value="لا">لا</option>
+    </select>
 
-  <button type="submit">إرسال البيانات عبر واتساب</button>
+    <div id="promo-price-section" style="display:none;">
+      <label>💰 سعر المنتج للترويج ($):</label>
+      <input type="number" id="product-price">
+    </div>
+  </div>
+
+  <div id="promote-section" style="display:none;">
+    <label>💰 سعر المنتج للترويج ($):</label>
+    <input type="number" id="only-promo-price">
+  </div>
+
+  <button type="submit">📤 إرسال عبر واتساب</button>
+  <button type="button" onclick="sendLocation()">📍 إرسال موقعي</button>
 </form>
 
 <script>
-$(document).ready(function() {
-  function resetBaghdadSelectors() {
-    $('#baghdad_side, #baghdad_area').val('');
-    $('#baghdadSideLabel, #baghdadAreaLabel').hide();
-    $('#baghdad_side, #baghdad_area').hide();
+  function toggleSections() {
+    const mode = document.getElementById("mode").value;
+    document.getElementById("register-section").style.display = mode === "register" ? "block" : "none";
+    document.getElementById("promote-section").style.display = mode === "promote" ? "block" : "none";
   }
 
-  $('#province').change(function() {
-    let province = $(this).val();
-    if (province === 'بغداد') {
-      $('#baghdadSideLabel, #baghdad_side').show();
+  function togglePromoPrice() {
+    const show = document.getElementById("promotion-needed").value === "نعم";
+    document.getElementById("promo-price-section").style.display = show ? "block" : "none";
+  }
+
+  function onProvinceChange() {
+    const province = document.getElementById("province").value;
+    document.getElementById("baghdad-options").style.display = province === "بغداد" ? "block" : "none";
+    checkBaghdadArea();
+  }
+
+  function loadBaghdadAreas() {
+    const side = document.getElementById("baghdad-side").value;
+    const areaSelect = document.getElementById("baghdad-area");
+    areaSelect.innerHTML = '<option value="">-- اختر --</option>';
+
+    const areas = side === "رصافة" ? ["رصافة أولى", "رصافة ثانية", "رصافة ثالثة"] :
+                 side === "كرخ" ? ["كرخ أولى", "كرخ ثانية", "كرخ ثالثة"] : [];
+
+    areas.forEach(area => {
+      const opt = document.createElement("option");
+      opt.value = area;
+      opt.textContent = area;
+      areaSelect.appendChild(opt);
+    });
+
+    checkBaghdadArea();
+  }
+
+  function checkBaghdadArea() {
+    const province = document.getElementById("province").value;
+    const side = document.getElementById("baghdad-side").value;
+    const area = document.getElementById("baghdad-area").value;
+    const pkg150 = document.querySelector('#package option[value="150"]');
+
+    if (province === "بغداد" && side === "رصافة" && area === "رصافة ثالثة") {
+      pkg150.style.display = "block";
     } else {
-      resetBaghdadSelectors();
-      $('#package150').hide();
-      $('#package').val('');
+      pkg150.style.display = "none";
     }
-  });
+  }
 
-  $('#baghdad_side').change(function() {
-    let side = $(this).val();
-    if (side === 'الرصافة') {
-      $('#baghdadAreaLabel, #baghdad_area').show();
-    } else {
-      $('#baghdadAreaLabel, #baghdad_area').hide();
-      $('#baghdad_area').val('');
-      $('#package150').hide();
-      $('#package').val('');
+  async function getUserIP() {
+    try {
+      const res = await fetch("https://api.ipify.org?format=json");
+      const data = await res.json();
+      return data.ip;
+    } catch {
+      return "غير معروف";
     }
-  });
+  }
 
-  $('#baghdad_area').change(function() {
-    let area = $(this).val();
-    if (area === 'الثالثة') {
-      $('#package150').show();
-    } else {
-      $('#package150').hide();
-      if ($('#package').val() === '150') {
-        $('#package').val('');
-      }
-    }
-  });
+  async function sendToWhatsApp() {
+    const name = document.getElementById("store-name").value.trim();
+    const phone = document.getElementById("contact-number").value.trim();
+    const mode = document.getElementById("mode").value;
+    const province = document.getElementById("province").value;
+    const side = document.getElementById("baghdad-side").value;
+    const area = document.getElementById("baghdad-area").value;
+    const address = document.getElementById("address").value.trim();
 
-  $('#registerForm').submit(function(e) {
-    e.preventDefault();
-
-    // تحقق بسيط من الحقول
-    if (!$('#name').val().trim() || !$('#phone').val().trim() || !$('#province').val() || !$('#package').val() || !$('#promo').val() || !$('#address').val().trim()) {
-      Swal.fire('خطأ', 'يرجى ملء جميع الحقول المطلوبة', 'error');
+    if (!name || !phone || !province || !address) {
+      alert("يرجى تعبئة كل الحقول");
       return;
     }
 
-    // تحقق من خيارات بغداد
-    if ($('#province').val() === 'بغداد') {
-      if (!$('#baghdad_side').val()) {
-        Swal.fire('خطأ', 'يرجى اختيار جانب بغداد', 'error');
-        return;
+    let message = `🔥 طلب جديد:\n\n📌 الاسم: ${name}\n📞 الهاتف: ${phone}\n🏘️ المحافظة: ${province}`;
+    if (province === "بغداد") {
+      message += `\n⬅️ الجهة: ${side}\n📍 المنطقة: ${area}`;
+    }
+    message += `\n📌 العنوان: ${address}`;
+
+    let total = 0;
+
+    if (mode === "register") {
+      const pkg = document.getElementById("package").value;
+      const promo = document.getElementById("promotion-needed").value;
+      message += `\n\n💼 باقة التسجيل: ${pkg}$`;
+      total += parseFloat(pkg);
+
+      if (promo === "نعم") {
+        const price = parseFloat(document.getElementById("product-price").value || 0);
+        const cost = Math.ceil((price / 5) * 2);
+        message += `\n📢 ترويج؟ نعم\n💰 سعر المنتج: ${price}$\n📢 كلفة الترويج: ${cost}$`;
+        total += cost;
+      } else {
+        message += `\n📢 ترويج؟ لا`;
       }
-      if ($('#baghdad_side').val() === 'الرصافة' && !$('#baghdad_area').val()) {
-        Swal.fire('خطأ', 'يرجى اختيار المنطقة في الرصافة', 'error');
-        return;
-      }
+
+    } else if (mode === "promote") {
+      const price = parseFloat(document.getElementById("only-promo-price").value || 0);
+      const cost = Math.ceil((price / 5) * 2);
+      total += cost;
+      message += `\n\n📢 ترويج فقط\n💰 سعر المنتج: ${price}$\n📢 كلفة الترويج: ${cost}$`;
     }
 
-    // تجهيز رسالة واتساب
-    let msg = `تسجيل محل جديد:\n` +
-      `الاسم: ${$('#name').val()}\n` +
-      `الهاتف: ${$('#phone').val()}\n` +
-      `المحافظة: ${$('#province').val()}\n` +
-      ($('#province').val() === 'بغداد' ? `جانب بغداد: ${$('#baghdad_side').val()}\n` : '') +
-      ($('#baghdad_area').val() ? `المنطقة: ${$('#baghdad_area').val()}\n` : '') +
-      `الباقة: ${$('#package option:selected').text()}\n` +
-      `ترويج: ${$('#promo').val()}\n` +
-      `العنوان: ${$('#address').val()}`;
+    const ip = await getUserIP();
+    message += `\n\n🌍 IP: ${ip}\n💵 المجموع الكلي: ${total}$`;
 
-    let phoneNumber = "07727220385"; // رقم الواتساب
+    const finalUrl = `https://wa.me/9647727220385?text=${encodeURIComponent(message)}`;
+    window.open(finalUrl, "_blank");
+  }
 
-    // ترميز الرابط
-    let whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`;
-
-    // فتح رابط واتساب في نافذة جديدة
-    window.open(whatsappUrl, '_blank');
-
-    // تنبيه نجاح
-    Swal.fire('تم الإرسال', 'تم إرسال البيانات عبر واتساب بنجاح', 'success');
-
-    // إعادة تعيين النموذج
-    $(this)[0].reset();
-    resetBaghdadSelectors();
-    $('#package150').hide();
-  });
-});
+  function sendLocation() {
+    const url = `https://wa.me/9647727220385?text=📍 هذا موقعي: ${encodeURIComponent(window.location.href)}`;
+    window.open(url, "_blank");
+  }
 </script>
 
 </body>
