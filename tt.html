@@ -25,115 +25,97 @@
 <label for="contact-number">📞 رقم التواصل:</label>
 <input type="text" id="contact-number" placeholder="مثال: 077xxxxxxxx">
 
-  <!-- أكمل هذا داخل كودك الحالي عند مكان مناسب -->
-<label for="province">🌍 اختر المحافظة:</label>
-<select id="province" onchange="updateDistricts(); checkBaghdadArea();">
-  <option value="">-- اختر --</option>
-  <option value="بغداد">بغداد</option>
-  <option value="أربيل">أربيل</option>
-  <option value="نينوى">نينوى</option>
-  <option value="البصرة">البصرة</option>
-  <option value="كركوك">كركوك</option>
-  <option value="النجف">النجف</option>
-  <option value="كربلاء">كربلاء</option>
-  <option value="السليمانية">السليمانية</option>
-  <option value="ذي قار">ذي قار</option>
-  <option value="الأنبار">الأنبار</option>
-  <option value="ديالى">ديالى</option>
-  <option value="الديوانية">الديوانية</option>
-  <option value="واسط">واسط</option>
-  <option value="ميسان">ميسان</option>
-  <option value="صلاح الدين">صلاح الدين</option>
-  <option value="بابل">بابل</option>
-</select>
-
-<div id="baghdad-zone" style="display:none;">
-  <label for="baghdad-side">📍 اختر جهة بغداد:</label>
-  <select id="baghdad-side" onchange="updateBaghdadAreas(); checkBaghdadArea();">
-    <option value="">-- اختر --</option>
-    <option value="رصافة">رصافة</option>
-    <option value="كرخ">كرخ</option>
+<!-- ✂️ نسخ ولصق هذا الجزء داخل <body> تحت الأقسام الأخرى -->
+<div class="section">
+  <label for="province">🌍 المحافظة:</label>
+  <select id="province" onchange="onProvinceChange()">
+    <option value="">-- اختر المحافظة --</option>
+    <option value="بغداد">بغداد</option>
+    <option value="البصرة">البصرة</option>
+    <option value="أربيل">أربيل</option>
+    <option value="نينوى">نينوى</option>
+    <option value="النجف">النجف</option>
+    <option value="كربلاء">كربلاء</option>
+    <option value="السليمانية">السليمانية</option>
+    <option value="الأنبار">الأنبار</option>
+    <option value="ذي قار">ذي قار</option>
+    <option value="واسط">واسط</option>
+    <option value="ديالى">ديالى</option>
+    <option value="بابل">بابل</option>
+    <option value="ميسان">ميسان</option>
+    <option value="صلاح الدين">صلاح الدين</option>
+    <option value="كركوك">كركوك</option>
+    <option value="المثنى">المثنى</option>
+    <option value="دهوك">دهوك</option>
+    <option value="القادسية">القادسية</option>
   </select>
 
-  <label for="baghdad-area">📍 اختر المنطقة:</label>
-  <select id="baghdad-area" onchange="checkBaghdadArea()">
-    <option value="">-- اختر --</option>
-  </select>
+  <div id="baghdad-options" style="display:none;">
+    <label for="baghdad-side">➡️ اختر الجهة:</label>
+    <select id="baghdad-side" onchange="loadBaghdadAreas()">
+      <option value="">-- اختر الجهة --</option>
+      <option value="رصافة">رصافة</option>
+      <option value="كرخ">كرخ</option>
+    </select>
+
+    <label for="baghdad-area">📍 المنطقة:</label>
+    <select id="baghdad-area" onchange="checkBaghdadArea()">
+      <option value="">-- اختر المنطقة --</option>
+    </select>
+  </div>
+
+  <label for="address">📦 وصف العنوان (دقيق):</label>
+  <input type="text" id="address" placeholder="مثال: بغداد / حي العامل / مقابل الفرن الذهبي">
+
+  <button onclick="sendLocation()">📍 إرسال موقعي عبر واتساب</button>
 </div>
 
-<label for="address-details">📍 وصف دقيق للعنوان:</label>
-<input type="text" id="address-details" placeholder="مثال: قرب مستشفى الكندي، شارع 42، مقابل صيدلية..." />
-
-<button onclick="sendLocationToWhatsApp()">📍 إرسال موقعي إلى واتساب</button>
-
+<!-- ✂️ أضف هذا داخل <script> في الأسفل -->
 <script>
-  function updateDistricts() {
-    const province = document.getElementById("province").value;
-    const baghdadZone = document.getElementById("baghdad-zone");
-    baghdadZone.style.display = province === "بغداد" ? "block" : "none";
+function onProvinceChange() {
+  const province = document.getElementById("province").value;
+  const baghdadOptions = document.getElementById("baghdad-options");
+  if (province === "بغداد") {
+    baghdadOptions.style.display = "block";
+  } else {
+    baghdadOptions.style.display = "none";
+    checkBaghdadArea(); // حتى نخفي 150 إن ما كان بغداد
+  }
+  checkBaghdadArea(); // تحديث فوري للباقة
+}
+
+function loadBaghdadAreas() {
+  const side = document.getElementById("baghdad-side").value;
+  const areaSelect = document.getElementById("baghdad-area");
+  areaSelect.innerHTML = '<option value="">-- اختر المنطقة --</option>';
+
+  let areas = [];
+  if (side === "رصافة") {
+    areas = ["رصافة أولى", "رصافة ثانية", "رصافة ثالثة"];
+  } else if (side === "كرخ") {
+    areas = ["كرخ أولى", "كرخ ثانية", "كرخ ثالثة"];
   }
 
-  function updateBaghdadAreas() {
-    const side = document.getElementById("baghdad-side").value;
-    const areaSelect = document.getElementById("baghdad-area");
-    areaSelect.innerHTML = "<option value=''>-- اختر --</option>";
-    if (side === "رصافة") {
-      areaSelect.innerHTML += "<option value='رصافة أولى'>رصافة أولى</option>";
-      areaSelect.innerHTML += "<option value='رصافة ثانية'>رصافة ثانية</option>";
-      areaSelect.innerHTML += "<option value='رصافة ثالثة'>رصافة ثالثة</option>";
-    } else if (side === "كرخ") {
-      areaSelect.innerHTML += "<option value='كرخ أولى'>كرخ أولى</option>";
-      areaSelect.innerHTML += "<option value='كرخ ثانية'>كرخ ثانية</option>";
-      areaSelect.innerHTML += "<option value='كرخ ثالثة'>كرخ ثالثة</option>";
-    }
-  }
+  areas.forEach(area => {
+    const opt = document.createElement("option");
+    opt.value = area;
+    opt.textContent = area;
+    areaSelect.appendChild(opt);
+  });
 
-  function checkBaghdadArea() {
-    const packageSelect = document.getElementById("package");
-    const area = document.getElementById("baghdad-area").value;
-    if (area === "رصافة ثالثة") {
-      Array.from(packageSelect.options).forEach(option => {
-        option.style.display = "block";
-      });
-    } else {
-      Array.from(packageSelect.options).forEach(option => {
-        if (option.value === "150") {
-          option.style.display = "none";
-        }
-      });
-    }
-  }
+  checkBaghdadArea();
+}
 
-  function sendLocationToWhatsApp() {
-    if (!navigator.geolocation) {
-      alert("المتصفح لا يدعم تحديد الموقع.");
-      return;
-    }
-
-    navigator.geolocation.getCurrentPosition(position => {
-      const lat = position.coords.latitude;
-      const lon = position.coords.longitude;
-      const mapsLink = `https://www.google.com/maps?q=${lat},${lon}`;
-      const msg = `📍 هذا موقعي الدقيق للمحل:\n${mapsLink}`;
-      const phone = "07727220385";
-      window.open(`https://wa.me/964${phone.slice(1)}?text=${encodeURIComponent(msg)}`, "_blank");
-    }, () => {
-      alert("لم يتم الحصول على الموقع.");
-    });
-  }
-
-  function checkBaghdadArea() {
+function checkBaghdadArea() {
   const packageSelect = document.getElementById("package");
   const province = document.getElementById("province").value;
   const side = document.getElementById("baghdad-side").value;
   const area = document.getElementById("baghdad-area").value;
 
-  // أولاً نظهر كل الباقات
   Array.from(packageSelect.options).forEach(option => {
-    option.style.display = "block";
+    option.style.display = "block"; // نظهر الكل
   });
 
-  // إذا ما اتحققت الشروط نخفي باقة 150$
   if (!(province === "بغداد" && side === "رصافة" && area === "رصافة ثالثة")) {
     Array.from(packageSelect.options).forEach(option => {
       if (option.value === "150") {
@@ -141,6 +123,85 @@
       }
     });
   }
+}
+
+function sendLocation() {
+  const link = `https://wa.me/9647727220385?text=📍%20هذا%20موقعي%20الدقيق%20للمحل:%0A${encodeURIComponent(window.location.href)}`;
+  window.open(link, "_blank");
+}
+
+// تعديل sendToWhatsApp حتى يضيف العنوان والموقع للرسالة
+async function sendToWhatsApp() {
+  const storeName = document.getElementById("store-name").value.trim();
+  const contactNumber = document.getElementById("contact-number").value.trim();
+  const mode = document.getElementById("mode").value;
+  const province = document.getElementById("province").value;
+  const side = document.getElementById("baghdad-side").value;
+  const area = document.getElementById("baghdad-area").value;
+  const address = document.getElementById("address").value.trim();
+
+  if (!storeName || !contactNumber || mode === "؟" || !province || !address) {
+    alert("يرجى تعبئة كافة الحقول المطلوبة.");
+    return;
+  }
+
+  const userIP = await getUserIP();
+  let message = "🔥 طلب جديد للتسجيل:\n\n";
+  message += `📌 الاسم: ${storeName}\n📞 رقم: ${contactNumber}\n🌐 IP: ${userIP}\n🗺️ المحافظة: ${province}`;
+
+  if (province === "بغداد") {
+    message += `\n➡️ الجهة: ${side}\n📍 المنطقة: ${area}`;
+  }
+
+  message += `\n🏠 العنوان التفصيلي: ${address}`;
+
+  let total = 0;
+
+  if (mode === "register") {
+    const pkg = document.getElementById("package").value;
+    const promo = document.getElementById("promotion-needed").value;
+
+    if (pkg === "؟" || promo === "؟") {
+      alert("يرجى اختيار الباقة والترويج.");
+      return;
+    }
+
+    const packagePrice = parseFloat(pkg);
+    message += `\n\n🔹 العملية: تسجيل\n🔸 الباقة: ${packagePrice}$\n⭐ هل تحتاج ترويج؟ ${promo}`;
+    total += packagePrice;
+
+    if (promo === "نعم") {
+      const promoValue = parseFloat(document.getElementById("product-price").value);
+      if (!promoValue || promoValue <= 0) {
+        alert("يرجى إدخال سعر منتج الترويج.");
+        return;
+      }
+      const promoCost = Math.ceil((promoValue / 5) * 2);
+      total += promoCost;
+      message += `\n💰 سعر المنتج: ${promoValue}$\n📢 تكلفة الترويج: ${promoCost}$`;
+    }
+
+  } else if (mode === "promote") {
+    const promoValue = parseFloat(document.getElementById("only-promo-price").value);
+    if (!promoValue || promoValue <= 0) {
+      alert("يرجى إدخال سعر المنتج.");
+      return;
+    }
+    const promoCost = Math.ceil((promoValue / 5) * 2);
+    total += promoCost;
+    message += `\n🔹 العملية: ترويج فقط\n💰 سعر المنتج: ${promoValue}$\n📢 تكلفة الترويج: ${promoCost}$`;
+  }
+
+  message += `\n\n💵 السعر الكلي: ${total}$`;
+
+  const phone = "07727220385";
+  const encodedMessage = encodeURIComponent(message);
+  const link = `https://wa.me/964${phone.slice(1)}?text=${encodedMessage}`;
+  window.open(link, "_blank");
+
+  setTimeout(() => {
+    alert("✅ تم تسجيل الطلب.\n📍 IP: " + userIP);
+  }, 1000);
 }
 </script>
 
