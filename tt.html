@@ -121,6 +121,27 @@
       alert("لم يتم الحصول على الموقع.");
     });
   }
+
+  function checkBaghdadArea() {
+  const packageSelect = document.getElementById("package");
+  const province = document.getElementById("province").value;
+  const side = document.getElementById("baghdad-side").value;
+  const area = document.getElementById("baghdad-area").value;
+
+  // أولاً نظهر كل الباقات
+  Array.from(packageSelect.options).forEach(option => {
+    option.style.display = "block";
+  });
+
+  // إذا ما اتحققت الشروط نخفي باقة 150$
+  if (!(province === "بغداد" && side === "رصافة" && area === "رصافة ثالثة")) {
+    Array.from(packageSelect.options).forEach(option => {
+      if (option.value === "150") {
+        option.style.display = "none";
+      }
+    });
+  }
+}
 </script>
 
 <label for="mode">🧭 نوع العملية:</label>
@@ -138,7 +159,7 @@
     <option value="150">باقة 150$ (تشمل أعلاه + تصوير + تصميم)</option>
   </select>
 
-  <label for="promotion-needed">⭐ هل تحتاج ترويج لمنتج؟</label>
+  <label for="promotion-needed">⭐ هل تحتاج ترويج للصفحة ؟</label>
   <select id="promotion-needed">
     <option value="؟">-- اختر --</option>
     <option value="نعم">نعم</option>
@@ -152,7 +173,7 @@
 </div>
 
 <div id="promote-section" class="section" style="display:none;">
-  <label for="only-promo-price">💰 سعر المنتج الذي تريد ترويجه:</label>
+  <label for="only-promo-price">💰 سعر الذي تريد ترويجه بة:</label>
   <input type="number" id="only-promo-price" placeholder="مثال: 30">
 </div>
 
