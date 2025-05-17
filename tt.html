@@ -1,213 +1,541 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>تسجيل المحل</title>
-   <link rel="stylesheet" href="tt.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALOGIX -| تسجيل المحلات التجارية</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #8774e1;
+            --secondary-color: #1e1f23;
+            --accent-color: #6a5acd;
+            --text-color: #e1e1e3;
+            --success-color: #2ecc71;
+            --card-bg: #2d2e33;
+            --input-bg: #3a3b40;
+            --border-color: #44454a;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .logo-container {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .company-name {
+            font-size: 1rem;
+            color: #a1a1a3;
+            letter-spacing: 2px;
+            margin-top: -5px;
+        }
+        
+        .form-container {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .form-header h2 {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        
+        .form-header p {
+            color: #a1a1a3;
+        }
+        
+        .form-control {
+            border-radius: 10px;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(135, 116, 225, 0.25);
+            background-color: var(--input-bg);
+            color: var(--text-color);
+        }
+        
+        label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+            color: #d1d1d3;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            border-radius: 10px;
+            padding: 12px 25px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+            border-color: var(--success-color);
+            border-radius: 10px;
+            padding: 12px 25px;
+            font-weight: 600;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .input-group-text {
+            background-color: var(--border-color);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+        
+        small.text-muted {
+            color: #8a8a8c !important;
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--secondary-color);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+        
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 20px;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-
-<h2>📋 نموذج تسجيل المحل</h2>
-
-<form onsubmit="event.preventDefault(); sendToWhatsApp();">
-  <label>🌟 اسم المحل:</label>
-  <input type="text" id="store-name" required>
-
-  <label>📞 رقم الهاتف:</label>
-  <input type="text" id="contact-number" required>
-
-  <label>🛠️ نوع الطلب:</label>
-  <select id="mode" onchange="toggleSections()" required>
-    <option value="">-- اختر --</option>
-    <option value="register">تسجيل</option>
-    <option value="promote">ترويج فقط</option>
-  </select>
-
-  <label>📍 المحافظة:</label>
-  <select id="province" onchange="onProvinceChange()" required>
-    <option value="">-- اختر المحافظة --</option>
-    <option value="بغداد">بغداد</option>
-    <option value="البصرة">البصرة</option>
-    <option value="نينوى">نينوى</option>
-    <option value="النجف">النجف</option>
-    <option value="ذي قار">ذي قار</option>
-    <option value="اربيل">أربيل</option>
-    <option value="الانبار">الأنبار</option>
-    <option value="كركوك">كركوك</option>
-    <option value="السليمانية">السليمانية</option>
-    <option value="دهوك">دهوك</option>
-    <option value="بابل">بابل</option>
-    <option value="كربلاء">كربلاء</option>
-    <option value="واسط">واسط</option>
-    <option value="صلاح الدين">صلاح الدين</option>
-    <option value="ميسان">ميسان</option>
-    <option value="المثنى">المثنى</option>
-    <option value="القادسية">القادسية</option>
-  </select>
-
-  <div id="baghdad-options" style="display:none;">
-    <label>⬅️ الجهة:</label>
-    <select id="baghdad-side" onchange="loadBaghdadAreas()">
-      <option value="">-- اختر --</option>
-      <option value="رصافة">رصافة</option>
-      <option value="كرخ">كرخ</option>
-    </select>
-
-    <label>📌 المنطقة:</label>
-    <select id="baghdad-area" onchange="checkBaghdadArea()">
-      <option value="">-- اختر --</option>
-    </select>
-  </div>
-
-  <label>📌 العنوان التفصيلي:</label>
-  <textarea id="address" required></textarea>
-
-  <div id="register-section" style="display:none;">
-    <label>💼 اختر الباقة:</label>
-    <select id="package">
-      <option value="">-- اختر الباقة --</option>
-      <option value="100">باقة 100$ (كول سنتر + مندوبين + توصيل)</option>
-      <option value="150" style="display:none;">باقة 150$ (كل ما سبق + تصوير وتصميم)</option>
-    </select>
-
-    <label>📢 هل تحتاج ترويج؟</label>
-    <select id="promotion-needed" onchange="togglePromoPrice()">
-      <option value="">-- اختر --</option>
-      <option value="نعم">نعم</option>
-      <option value="لا">لا</option>
-    </select>
-
-    <div id="promo-price-section" style="display:none;">
-      <label>💰 سعر المنتج للترويج ($):</label>
-      <input type="number" id="product-price">
+    <div class="container py-5">
+        <div class="logo-container animate-fade">
+            <div class="logo">شركة</div>
+            <div class="company-name">ALOGIX</div>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="form-container animate-fade" style="animation-delay: 0.2s;">
+                    <div class="form-header">
+                        <h2>سجل محلّك الآن</h2>
+                        <p>املأ النموذج أدناه لتسجيل أو ترويج محلّك</p>
+                    </div>
+                    
+                    <form id="storeForm">
+                        <!-- اسم المحل -->
+                        <div class="form-group">
+                            <label for="storeName">اسم المحل *</label>
+                            <input type="text" class="form-control" id="storeName" required placeholder="أدخل اسم المحل">
+                        </div>
+                        
+                        <!-- رقم الهاتف -->
+                        <div class="form-group">
+                            <label for="phoneNumber">رقم الهاتف *</label>
+                            <input type="tel" class="form-control" id="phoneNumber" required placeholder="077XXXXXXXX" pattern="077[0-9]{8}">
+                            <small class="text-muted">يجب أن يبدأ الرقم بـ 077 ويتبع بـ 8 أرقام</small>
+                        </div>
+                        
+                        <!-- المحافظة -->
+                        <div class="form-group">
+                            <label for="governorate">المحافظة *</label>
+                            <select class="form-control" id="governorate" required>
+                                <option value="" selected disabled>اختر المحافظة</option>
+                                <option value="بغداد">بغداد</option>
+                                <option value="البصرة">البصرة</option>
+                                <option value="نينوى">نينوى</option>
+                                <option value="أربيل">أربيل</option>
+                                <option value="السليمانية">السليمانية</option>
+                                <option value="ذي قار">ذي قار</option>
+                                <option value="كركوك">كركوك</option>
+                                <option value="الأنبار">الأنبار</option>
+                                <option value="بابل">بابل</option>
+                                <option value="كربلاء">كربلاء</option>
+                                <option value="النجف">النجف</option>
+                                <option value="ميسان">ميسان</option>
+                                <option value="واسط">واسط</option>
+                                <option value="ديالى">ديالى</option>
+                                <option value="صلاح الدين">صلاح الدين</option>
+                                <option value="القادسية">القادسية</option>
+                                <option value="دهوك">دهوك</option>
+                                <option value="المثنى">المثنى</option>
+                            </select>
+                        </div>
+                        
+                        <!-- المنطقة (تظهر فقط إذا كانت بغداد) -->
+                        <div class="form-group hidden" id="baghdadDistrictGroup">
+                            <label for="baghdadDistrict">المنطقة في بغداد *</label>
+                            <select class="form-control" id="baghdadDistrict">
+                                <option value="" selected disabled>اختر المنطقة</option>
+                                <option value="الرصافة">الرصافة</option>
+                                <option value="الكرخ">الكرخ</option>
+                            </select>
+                        </div>
+                        
+                        <!-- الرصافة (تظهر فقط إذا كانت الرصافة) -->
+                        <div class="form-group hidden" id="rusafaGroup">
+                            <label for="rusafaArea">منطقة الرصافة *</label>
+                            <select class="form-control" id="rusafaArea">
+                                <option value="" selected disabled>اختر المنطقة</option>
+                                <option value="الرصافة الأولى">الرصافة الأولى</option>
+                                <option value="الرصافة الثانية">الرصافة الثانية</option>
+                                <option value="الرصافة الثالثة">الرصافة الثالثة</option>
+                            </select>
+                        </div>
+                        
+                        <!-- الكرخ (تظهر فقط إذا كانت الكرخ) -->
+                        <div class="form-group hidden" id="karkhGroup">
+                            <label for="karkhArea">منطقة الكرخ *</label>
+                            <select class="form-control" id="karkhArea">
+                                <option value="" selected disabled>اختر المنطقة</option>
+                                <option value="الكرخ الأولى">الكرخ الأولى</option>
+                                <option value="الكرخ الثانية">الكرخ الثانية</option>
+                                <option value="الكرخ الثالثة">الكرخ الثالثة</option>
+                            </select>
+                        </div>
+                        
+                        <!-- الوصف الدقيق -->
+                        <div class="form-group">
+                            <label for="storeDescription">الوصف الدقيق للموقع *</label>
+                            <textarea class="form-control" id="storeDescription" rows="3" required placeholder="أدخل وصفاً دقيقاً لموقع المحل"></textarea>
+                        </div>
+                        
+                        <!-- نوع العملية -->
+                        <div class="form-group">
+                            <label for="operationType">نوع العملية *</label>
+                            <select class="form-control" id="operationType" required>
+                                <option value="" selected disabled>اختر نوع العملية</option>
+                                <option value="register">تسجيل</option>
+                                <option value="promote">ترويج</option>
+                            </select>
+                        </div>
+                        
+                        <!-- الباقة (تظهر فقط عند اختيار تسجيل) -->
+                        <div class="form-group hidden" id="packageGroup">
+                            <label for="package">اختر الباقة *</label>
+                            <select class="form-control" id="package">
+                                <option value="" selected disabled>اختر الباقة</option>
+                                <option value="150">باقة 150,000 دينار (للرصافة الثالثة فقط)</option>
+                                <option value="100">باقة 100,000 دينار (لجميع محافظات العراق)</option>
+                            </select>
+                        </div>
+                        
+                        <!-- سعر الترويج (تظهر فقط عند اختيار ترويج) -->
+                        <div class="form-group hidden" id="promotionGroup">
+                            <label for="promotionAmount">مبلغ الترويج (بالدولار) *</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" id="promotionAmount" placeholder="أدخل المبلغ">
+                                <span class="input-group-text">$</span>
+                            </div>
+                            <small class="text-muted">لكل 5 دولار يضاف 2 دولار ربح</small>
+                            <div id="profitCalculation" class="mt-2 p-2 bg-light rounded hidden" style="background-color: var(--input-bg) !important;">
+                                الربح المتوقع: <span id="profitAmount" style="color: var(--success-color); font-weight: bold;">0</span> دولار
+                            </div>
+                        </div>
+                        
+                        <!-- زر التسجيل والدفع -->
+                        <button type="button" id="submitBtn" class="btn btn-success">
+                            <i class="fas fa-paper-plane me-2"></i> تسجيل ودفع الآن</button>
+                                <button class="button111" onclick="window.location.href='index.html'">رجوع الى صفحة الاساسية
+    </button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-
-  <div id="promote-section" style="display:none;">
-    <label>💰 سعر المنتج للترويج ($):</label>
-    <input type="number" id="only-promo-price">
-  </div>
-
-  <button type="submit">📤 إرسال عبر واتساب</button>
-  <button type="button" onclick="sendLocation()">📍 إرسال موقعي</button>
-  <button class="button111" onclick="window.location.href='index.html'">رجوع الى صفحة الاساسية</button>
-</form>
-
-<script>
-  function toggleSections() {
-    const mode = document.getElementById("mode").value;
-    document.getElementById("register-section").style.display = mode === "register" ? "block" : "none";
-    document.getElementById("promote-section").style.display = mode === "promote" ? "block" : "none";
-  }
-
-  function togglePromoPrice() {
-    const show = document.getElementById("promotion-needed").value === "نعم";
-    document.getElementById("promo-price-section").style.display = show ? "block" : "none";
-  }
-
-  function onProvinceChange() {
-    const province = document.getElementById("province").value;
-    document.getElementById("baghdad-options").style.display = province === "بغداد" ? "block" : "none";
-    checkBaghdadArea();
-  }
-
-  function loadBaghdadAreas() {
-    const side = document.getElementById("baghdad-side").value;
-    const areaSelect = document.getElementById("baghdad-area");
-    areaSelect.innerHTML = '<option value="">-- اختر --</option>';
-
-    const areas = side === "رصافة" ? ["رصافة أولى", "رصافة ثانية", "رصافة ثالثة"] :
-                 side === "كرخ" ? ["كرخ أولى", "كرخ ثانية", "كرخ ثالثة"] : [];
-
-    areas.forEach(area => {
-      const opt = document.createElement("option");
-      opt.value = area;
-      opt.textContent = area;
-      areaSelect.appendChild(opt);
-    });
-
-    checkBaghdadArea();
-  }
-
-  function checkBaghdadArea() {
-    const province = document.getElementById("province").value;
-    const side = document.getElementById("baghdad-side").value;
-    const area = document.getElementById("baghdad-area").value;
-    const pkg150 = document.querySelector('#package option[value="150"]');
-
-    if (province === "بغداد" && side === "رصافة" && area === "رصافة ثالثة") {
-      pkg150.style.display = "block";
-    } else {
-      pkg150.style.display = "none";
-    }
-  }
-
-  async function getUserIP() {
-    try {
-      const res = await fetch("https://api.ipify.org?format=json");
-      const data = await res.json();
-      return data.ip;
-    } catch {
-      return "غير معروف";
-    }
-  }
-
-  async function sendToWhatsApp() {
-    const name = document.getElementById("store-name").value.trim();
-    const phone = document.getElementById("contact-number").value.trim();
-    const mode = document.getElementById("mode").value;
-    const province = document.getElementById("province").value;
-    const side = document.getElementById("baghdad-side").value;
-    const area = document.getElementById("baghdad-area").value;
-    const address = document.getElementById("address").value.trim();
-
-    if (!name || !phone || !province || !address) {
-      alert("يرجى تعبئة كل الحقول");
-      return;
-    }
-
-    let message = `🔥 طلب جديد:\n\n📌 الاسم: ${name}\n📞 الهاتف: ${phone}\n🏘️ المحافظة: ${province}`;
-    if (province === "بغداد") {
-      message += `\n⬅️ الجهة: ${side}\n📍 المنطقة: ${area}`;
-    }
-    message += `\n📌 العنوان: ${address}`;
-
-    let total = 0;
-
-    if (mode === "register") {
-      const pkg = document.getElementById("package").value;
-      const promo = document.getElementById("promotion-needed").value;
-      message += `\n\n💼 باقة التسجيل: ${pkg}$`;
-      total += parseFloat(pkg);
-
-      if (promo === "نعم") {
-        const price = parseFloat(document.getElementById("product-price").value || 0);
-        const cost = Math.ceil((price / 5) * 2);
-        message += `\n📢 ترويج؟ نعم\n💰 سعر المنتج: ${price}$\n📢 كلفة الترويج: ${cost}$`;
-        total += cost;
-      } else {
-        message += `\n📢 ترويج؟ لا`;
-      }
-
-    } else if (mode === "promote") {
-      const price = parseFloat(document.getElementById("only-promo-price").value || 0);
-      const cost = Math.ceil((price / 5) * 2);
-      total += cost;
-      message += `\n\n📢 ترويج فقط\n💰 سعر المنتج: ${price}$\n📢 كلفة الترويج: ${cost}$`;
-    }
-
-    const ip = await getUserIP();
-    message += `\n\n🌍 IP: ${ip}\n💵 المجموع الكلي: ${total}$`;
-
-    const finalUrl = `https://wa.me/9647706509693?text=${encodeURIComponent(message)}`;
-    window.open(finalUrl, "_blank");
-  }
-
-  function sendLocation() {
-    const url = `https://wa.me/9647727220385?text=📍 هذا موقعي: ${encodeURIComponent(window.location.href)}`;
-    window.open(url, "_blank");
-  }
-</script>
-
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // عناصر DOM
+            const phoneNumberInput = document.getElementById('phoneNumber');
+            const governorateSelect = document.getElementById('governorate');
+            const baghdadDistrictGroup = document.getElementById('baghdadDistrictGroup');
+            const baghdadDistrictSelect = document.getElementById('baghdadDistrict');
+            const rusafaGroup = document.getElementById('rusafaGroup');
+            const rusafaAreaSelect = document.getElementById('rusafaArea');
+            const karkhGroup = document.getElementById('karkhGroup');
+            const karkhAreaSelect = document.getElementById('karkhArea');
+            const operationTypeSelect = document.getElementById('operationType');
+            const packageGroup = document.getElementById('packageGroup');
+            const packageSelect = document.getElementById('package');
+            const promotionGroup = document.getElementById('promotionGroup');
+            const promotionAmountInput = document.getElementById('promotionAmount');
+            const profitCalculation = document.getElementById('profitCalculation');
+            const profitAmountSpan = document.getElementById('profitAmount');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            // منع إدخال أي شيء غير الأرقام في حقل الهاتف
+            phoneNumberInput.addEventListener('input', function() {
+                this.value = this.value.replace(/[^0-9]/g, '');
+            });
+            
+            // تغيير المحافظة
+            governorateSelect.addEventListener('change', function() {
+                const selectedGovernorate = this.value;
+                
+                // إخفاء جميع المجموعات أولاً
+                baghdadDistrictGroup.classList.add('hidden');
+                rusafaGroup.classList.add('hidden');
+                karkhGroup.classList.add('hidden');
+                
+                // إظهار المجموعات المناسبة لبغداد
+                if (selectedGovernorate === 'بغداد') {
+                    baghdadDistrictGroup.classList.remove('hidden');
+                }
+            });
+            
+            // تغيير منطقة بغداد
+            baghdadDistrictSelect.addEventListener('change', function() {
+                const selectedDistrict = this.value;
+                
+                // إخفاء جميع المجموعات أولاً
+                rusafaGroup.classList.add('hidden');
+                karkhGroup.classList.add('hidden');
+                
+                // إظهار المجموعات المناسبة
+                if (selectedDistrict === 'الرصافة') {
+                    rusafaGroup.classList.remove('hidden');
+                } else if (selectedDistrict === 'الكرخ') {
+                    karkhGroup.classList.remove('hidden');
+                }
+            });
+            
+            // تغيير نوع العملية
+            operationTypeSelect.addEventListener('change', function() {
+                const selectedOperation = this.value;
+                
+                // إخفاء جميع المجموعات أولاً
+                packageGroup.classList.add('hidden');
+                promotionGroup.classList.add('hidden');
+                profitCalculation.classList.add('hidden');
+                
+                // إظهار المجموعات المناسبة
+                if (selectedOperation === 'register') {
+                    packageGroup.classList.remove('hidden');
+                } else if (selectedOperation === 'promote') {
+                    promotionGroup.classList.remove('hidden');
+                }
+            });
+            
+            // حساب الربح عند تغيير مبلغ الترويج
+            promotionAmountInput.addEventListener('input', function() {
+                const amount = parseFloat(this.value) || 0;
+                const profit = Math.floor(amount / 5) * 2;
+                
+                if (amount > 0) {
+                    profitAmountSpan.textContent = profit;
+                    profitCalculation.classList.remove('hidden');
+                } else {
+                    profitCalculation.classList.add('hidden');
+                }
+            });
+            
+            // إرسال النموذج
+            submitBtn.addEventListener('click', function() {
+                // التحقق من صحة النموذج
+                if (!validateForm()) {
+                    return;
+                }
+                
+                // إنشاء رسالة الواتساب
+                const whatsappMessage = generateWhatsAppMessage();
+                
+                // إرسال الرسالة عبر الواتساب
+                sendWhatsAppMessage(whatsappMessage);
+            });
+            
+            // التحقق من صحة النموذج
+            function validateForm() {
+                let isValid = true;
+                
+                // التحقق من اسم المحل
+                if (!document.getElementById('storeName').value.trim()) {
+                    alert('الرجاء إدخال اسم المحل');
+                    isValid = false;
+                }
+                
+                // التحقق من رقم الهاتف
+                const phoneNumber = phoneNumberInput.value;
+                if (!phoneNumber.startsWith('077') || phoneNumber.length !== 11 || !/^\d+$/.test(phoneNumber)) {
+                    alert('الرجاء إدخال رقم هاتف صحيح يبدأ بـ 077 ويتكون من 11 رقماً');
+                    isValid = false;
+                }
+                
+                // التحقق من المحافظة
+                if (!governorateSelect.value) {
+                    alert('الرجاء اختيار المحافظة');
+                    isValid = false;
+                }
+                
+                // التحقق من مناطق بغداد إذا كانت المحافظة بغداد
+                if (governorateSelect.value === 'بغداد') {
+                    if (!baghdadDistrictSelect.value) {
+                        alert('الرجاء اختيار المنطقة في بغداد');
+                        isValid = false;
+                    }
+                    
+                    if (baghdadDistrictSelect.value === 'الرصافة' && !rusafaAreaSelect.value) {
+                        alert('الرجاء اختيار منطقة الرصافة');
+                        isValid = false;
+                    }
+                    
+                    if (baghdadDistrictSelect.value === 'الكرخ' && !karkhAreaSelect.value) {
+                        alert('الرجاء اختيار منطقة الكرخ');
+                        isValid = false;
+                    }
+                }
+                
+                // التحقق من الوصف
+                if (!document.getElementById('storeDescription').value.trim()) {
+                    alert('الرجاء إدخال وصف دقيق للموقع');
+                    isValid = false;
+                }
+                
+                // التحقق من نوع العملية
+                if (!operationTypeSelect.value) {
+                    alert('الرجاء اختيار نوع العملية');
+                    isValid = false;
+                }
+                
+                // التحقق من الباقة إذا كانت العملية تسجيل
+                if (operationTypeSelect.value === 'register' && !packageSelect.value) {
+                    alert('الرجاء اختيار الباقة');
+                    isValid = false;
+                }
+                
+                // التحقق من مبلغ الترويج إذا كانت العملية ترويج
+                if (operationTypeSelect.value === 'promote') {
+                    const amount = parseFloat(promotionAmountInput.value);
+                    if (!amount || amount <= 0) {
+                        alert('الرجاء إدخال مبلغ ترويج صحيح');
+                        isValid = false;
+                    }
+                }
+                
+                return isValid;
+            }
+            
+            // إنشاء رسالة الواتساب
+            function generateWhatsAppMessage() {
+                let message = "📋 *طلب جديد - ALOGIX *\n\n";
+                message += "🔹 *معلومات الطلب:*\n";
+                
+                // نوع العملية
+                if (operationTypeSelect.value === 'register') {
+                    message += "📌 *نوع الخدمة:* تسجيل محل جديد\n";
+                    message += `💰 *الباقة المختارة:* ${packageSelect.value === '150' ? '150,000 دينار (للرصافة الثالثة)' : '100,000 دينار (لجميع المحافظات)'}\n\n`;
+                } else {
+                    message += "📌 *نوع الخدمة:* ترويج المحل\n";
+                    const amount = parseFloat(promotionAmountInput.value);
+                    const profit = Math.floor(amount / 5) * 2;
+                    message += `💰 *مبلغ الترويج:* ${amount} دولار\n`;
+                    message += `🔼 *الربح المتوقع:* ${profit} دولار\n\n`;
+                }
+                
+                // تفاصيل المحل
+                message += "🔹 *تفاصيل المحل:*\n";
+                message += `🏷️ *اسم المحل:* ${document.getElementById('storeName').value}\n`;
+                message += `📞 *رقم الهاتف:* ${phoneNumberInput.value}\n`;
+                message += `📍 *الموقع:* ${governorateSelect.value}`;
+                
+                // تفاصيل بغداد إذا كانت المحافظة بغداد
+                if (governorateSelect.value === 'بغداد') {
+                    message += ` - ${baghdadDistrictSelect.value}`;
+                    
+                    if (baghdadDistrictSelect.value === 'الرصافة') {
+                        message += ` - ${rusafaAreaSelect.value}`;
+                    } else {
+                        message += ` - ${karkhAreaSelect.value}`;
+                    }
+                }
+                
+                message += `\n📝 *الوصف الدقيق:*\n${document.getElementById('storeDescription').value}\n\n`;
+                message += "📅 *تاريخ الطلب:* " + new Date().toLocaleString('ar-IQ') + "\n";
+                message += "شكراً لاختياركم ALOGIX";
+                
+                return encodeURIComponent(message);
+            }
+            
+            // إرسال رسالة الواتساب
+            function sendWhatsAppMessage(message) {
+                const phoneNumber = "7727220385"; // رقم الهاتف المقدم
+                const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+                
+                // فتح الرابط في نافذة جديدة
+                window.open(whatsappUrl, '_blank');
+            }
+        });
+    </script>
 </body>
 </html>
