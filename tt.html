@@ -1,392 +1,211 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>تسجيل المحل | ALOGIX</title>
-  <link rel="stylesheet" href="tt.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>نموذج تسجيل المحل</title>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Axios -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<style>
+  body {
+    background: #121212;
+    color: #eee;
+    font-family: Arial, sans-serif;
+  }
+  form {
+    max-width: 500px;
+    margin: 2rem auto;
+    background: #222;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  label {
+    display: block;
+    margin: 10px 0 5px;
+  }
+  select, input, button {
+    width: 100%;
+    padding: 8px;
+    background: #333;
+    border: none;
+    color: #eee;
+    border-radius: 5px;
+    margin-bottom: 15px;
+  }
+  button {
+    background: #0a84ff;
+    cursor: pointer;
+    font-weight: bold;
+  }
+</style>
 </head>
 <body>
 
-<div style="background:#032a41;color:#fff;padding:15px;border-radius:8px;margin-bottom:20px;">
-  ℹ️ يرجى تعبئة النموذج حسب نوع الخدمة:
-  <ul>
-    <li>💼 "تسجيل": خاص بأصحاب المحلات أو البيجات</li>
-    <li>📢 "ترويج فقط": فقط لترويج منتج</li>
-    <li>💰 العملة: دولار عبر رصيد اسياسيل</li>
-    <li>✅ بعد الضغط على "دفع وتسجيل" سيتم تحويلك تلقائياً إلى واتساب</li>
-  </ul>
-</div>
+<form id="registerForm">
+  <h2>تسجيل المحل / البيج</h2>
 
-<h2>نموذج التسجيل</h2>
+  <label for="name">اسم المحل / البيج</label>
+  <input type="text" id="name" name="name" placeholder="أدخل اسم المحل" required />
 
-<label for="store-name">📌 اسم المحل أو البيج:</label>
-<input type="text" id="store-name" placeholder="اكتب اسم محلك أو بيجك">
+  <label for="phone">رقم الهاتف</label>
+  <input type="tel" id="phone" name="phone" placeholder="مثال: 077xxxxxxxx" required />
 
-<label for="contact-number">📞 رقم التواصل:</label>
-<input type="text" id="contact-number" placeholder="مثال: 077xxxxxxxx">
-
-<!-- ✂️ نسخ ولصق هذا الجزء داخل <body> تحت الأقسام الأخرى -->
-<div class="section">
-  <label for="province">🌍 المحافظة:</label>
-  <select id="province" onchange="onProvinceChange()">
+  <label for="province">اختر المحافظة</label>
+  <select id="province" name="province" required>
     <option value="">-- اختر المحافظة --</option>
     <option value="بغداد">بغداد</option>
     <option value="البصرة">البصرة</option>
-    <option value="أربيل">أربيل</option>
-    <option value="نينوى">نينوى</option>
     <option value="النجف">النجف</option>
-    <option value="كربلاء">كربلاء</option>
-    <option value="السليمانية">السليمانية</option>
-    <option value="الأنبار">الأنبار</option>
-    <option value="ذي قار">ذي قار</option>
-    <option value="واسط">واسط</option>
-    <option value="ديالى">ديالى</option>
-    <option value="بابل">بابل</option>
-    <option value="ميسان">ميسان</option>
-    <option value="صلاح الدين">صلاح الدين</option>
+    <option value="نينوى">نينوى</option>
     <option value="كركوك">كركوك</option>
-    <option value="المثنى">المثنى</option>
-    <option value="دهوك">دهوك</option>
+    <option value="صلاح الدين">صلاح الدين</option>
+    <option value="ديالى">ديالى</option>
+    <option value="ميسان">ميسان</option>
+    <option value="ذي قار">ذي قار</option>
     <option value="القادسية">القادسية</option>
+    <option value="بابل">بابل</option>
+    <option value="الأنبار">الأنبار</option>
+    <option value="الكرمة">الكرمة</option>
+    <option value="واسط">واسط</option>
+    <option value="الحلة">الحلة</option>
+    <option value="الديوانية">الديوانية</option>
+    <option value="أربيل">أربيل</option>
+    <option value="السليمانية">السليمانية</option>
+    <option value="دهوك">دهوك</option>
+    <!-- يمكن إضافة المزيد إذا تريد -->
   </select>
 
-  <div id="baghdad-options" style="display:none;">
-    <label for="baghdad-side">➡️ اختر الجهة:</label>
-    <select id="baghdad-side" onchange="loadBaghdadAreas()">
-      <option value="">-- اختر الجهة --</option>
-      <option value="رصافة">رصافة</option>
-      <option value="كرخ">كرخ</option>
-    </select>
-
-    <label for="baghdad-area">📍 المنطقة:</label>
-    <select id="baghdad-area" onchange="checkBaghdadArea()">
-      <option value="">-- اختر المنطقة --</option>
-    </select>
-  </div>
-
-  <label for="address">📦 وصف العنوان (دقيق):</label>
-  <input type="text" id="address" placeholder="مثال: بغداد / حي العامل / مقابل الفرن الذهبي">
-
-  <a id="wa-link" href="#" target="_blank" class="wa-button">إرسال عبر واتساب</a>
-
-
-</div>
-
-<!-- ✂️ أضف هذا داخل <script> في الأسفل -->
-<script>
-function onProvinceChange() {
-  const province = document.getElementById("province").value;
-  const baghdadOptions = document.getElementById("baghdad-options");
-  if (province === "بغداد") {
-    baghdadOptions.style.display = "block";
-  } else {
-    baghdadOptions.style.display = "none";
-    checkBaghdadArea(); // حتى نخفي 150 إن ما كان بغداد
-  }
-  checkBaghdadArea(); // تحديث فوري للباقة
-}
-
-function loadBaghdadAreas() {
-  const side = document.getElementById("baghdad-side").value;
-  const areaSelect = document.getElementById("baghdad-area");
-  areaSelect.innerHTML = '<option value="">-- اختر المنطقة --</option>';
-
-  let areas = [];
-  if (side === "رصافة") {
-    areas = ["رصافة أولى", "رصافة ثانية", "رصافة ثالثة"];
-  } else if (side === "كرخ") {
-    areas = ["كرخ أولى", "كرخ ثانية", "كرخ ثالثة"];
-  }
-
-  areas.forEach(area => {
-    const opt = document.createElement("option");
-    opt.value = area;
-    opt.textContent = area;
-    areaSelect.appendChild(opt);
-  });
-
-  checkBaghdadArea();
-}
-
-function checkBaghdadArea() {
-  const packageSelect = document.getElementById("package");
-  const province = document.getElementById("province").value;
-  const side = document.getElementById("baghdad-side").value;
-  const area = document.getElementById("baghdad-area").value;
-
-  Array.from(packageSelect.options).forEach(option => {
-    option.style.display = "block"; // نظهر الكل
-  });
-
-  if (!(province === "بغداد" && side === "رصافة" && area === "رصافة ثالثة")) {
-    Array.from(packageSelect.options).forEach(option => {
-      if (option.value === "150") {
-        option.style.display = "none";
-      }
-    });
-  }
-}
-
-function sendLocation() {
-  const link = `https://wa.me/9647727220385?text=📍%20هذا%20موقعي%20الدقيق%20للمحل:%0A${encodeURIComponent(window.location.href)}`;
-  window.open(link, "_blank");
-}
-
-// تعديل sendToWhatsApp حتى يضيف العنوان والموقع للرسالة
-async function sendToWhatsApp() {
-  const storeName = document.getElementById("store-name").value.trim();
-  const contactNumber = document.getElementById("contact-number").value.trim();
-  const mode = document.getElementById("mode").value;
-  const province = document.getElementById("province").value;
-  const side = document.getElementById("baghdad-side").value;
-  const area = document.getElementById("baghdad-area").value;
-  const address = document.getElementById("address").value.trim();
-
-  if (!storeName || !contactNumber || mode === "؟" || !province || !address) {
-    alert("يرجى تعبئة كافة الحقول المطلوبة.");
-    return;
-  }
-
-  const userIP = await getUserIP();
-  let message = "🔥 طلب جديد للتسجيل:\n\n";
-  message += `📌 الاسم: ${storeName}\n📞 رقم: ${contactNumber}\n🌐 IP: ${userIP}\n🗺️ المحافظة: ${province}`;
-
-  if (province === "بغداد") {
-    message += `\n➡️ الجهة: ${side}\n📍 المنطقة: ${area}`;
-  }
-
-  message += `\n🏠 العنوان التفصيلي: ${address}`;
-
-  let total = 0;
-
-  if (mode === "register") {
-    const pkg = document.getElementById("package").value;
-    const promo = document.getElementById("promotion-needed").value;
-
-    if (pkg === "؟" || promo === "؟") {
-      alert("يرجى اختيار الباقة والترويج.");
-      return;
-    }
-
-    const packagePrice = parseFloat(pkg);
-    message += `\n\n🔹 العملية: تسجيل\n🔸 الباقة: ${packagePrice}$\n⭐ هل تحتاج ترويج؟ ${promo}`;
-    total += packagePrice;
-
-    if (promo === "نعم") {
-      const promoValue = parseFloat(document.getElementById("product-price").value);
-      if (!promoValue || promoValue <= 0) {
-        alert("يرجى إدخال سعر منتج الترويج.");
-        return;
-      }
-      const promoCost = Math.ceil((promoValue / 5) * 2);
-      total += promoCost;
-      message += `\n💰 سعر المنتج: ${promoValue}$\n📢 تكلفة الترويج: ${promoCost}$`;
-    }
-
-  } else if (mode === "promote") {
-    const promoValue = parseFloat(document.getElementById("only-promo-price").value);
-    if (!promoValue || promoValue <= 0) {
-      alert("يرجى إدخال سعر المنتج.");
-      return;
-    }
-    const promoCost = Math.ceil((promoValue / 5) * 2);
-    total += promoCost;
-    message += `\n🔹 العملية: ترويج فقط\n💰 سعر المنتج: ${promoValue}$\n📢 تكلفة الترويج: ${promoCost}$`;
-  }
-
-  message += `\n\n💵 السعر الكلي: ${total}$`;
-
-  const phone = "07727220385";
-  const encodedMessage = encodeURIComponent(message);
-  const link = `https://wa.me/964${phone.slice(1)}?text=${encodedMessage}`;
-  window.open(link, "_blank");
-
-  setTimeout(() => {
-    alert("✅ تم تسجيل الطلب.\n📍 IP: " + userIP);
-  }, 1000);
-}
-</script>
-
-<label for="mode">🧭 نوع العملية:</label>
-<select id="mode" onchange="toggleSections()">
-  <option value="؟">-- اختر --</option>
-  <option value="register">تسجيل</option>
-  <option value="promote">ترويج فقط</option>
-</select>
-
-<div id="register-section" class="section" style="display:none;">
-  <label for="package">🎁 اختر الباقة:</label>
-  <select id="package">
-    <option value="؟">-- اختر --</option>
-    <option value="100">باقة 100$ (كول سنتر + مندوبين + توصيل)</option>
-    <option value="150">باقة 150$ (تشمل أعلاه + تصوير + تصميم)</option>
+  <label for="baghdad_side" id="baghdadSideLabel" style="display:none;">اختر جانب بغداد</label>
+  <select id="baghdad_side" name="baghdad_side" style="display:none;">
+    <option value="">-- اختر --</option>
+    <option value="الرصافة">الرصافة</option>
+    <option value="الكرخ">الكرخ</option>
   </select>
 
-  <label for="promotion-needed">⭐ هل تحتاج ترويج للصفحة ؟</label>
-  <select id="promotion-needed">
-    <option value="؟">-- اختر --</option>
-    <option value="نعم">نعم</option>
+  <label for="baghdad_area" id="baghdadAreaLabel" style="display:none;">اختر المنطقة</label>
+  <select id="baghdad_area" name="baghdad_area" style="display:none;">
+    <option value="">-- اختر --</option>
+    <option value="الأولى">الأولى</option>
+    <option value="الثانية">الثانية</option>
+    <option value="الثالثة">الثالثة</option>
+  </select>
+
+  <label for="package">اختر الباقة</label>
+  <select id="package" name="package" required>
+    <option value="">-- اختر الباقة --</option>
+    <option value="100">100$ - خدمات كول سنتر، مندوبين، توصيل</option>
+    <!-- باقة 150$ تظهر فقط في رصافة الثالثة -->
+    <option value="150" id="package150" style="display:none;">150$ - تشمل 100$ + تصوير احترافي وتصميم صور</option>
+  </select>
+
+  <label for="promo">ترويج المنتجات (3$ هامش ربح)</label>
+  <select id="promo" name="promo" required>
     <option value="لا">لا</option>
+    <option value="نعم">نعم</option>
   </select>
 
-  <div id="promo-price-section" style="display:none;">
-    <label for="product-price">💰 سعر المنتج بالدولار:</label>
-    <input type="number" id="product-price" placeholder="مثال: 25">
-  </div>
-</div>
+  <label for="address">العنوان التفصيلي</label>
+  <input type="text" id="address" name="address" placeholder="أدخل العنوان بدقة مع التفاصيل (شارع، بناية، طابق)" required />
 
-<div id="promote-section" class="section" style="display:none;">
-  <label for="only-promo-price">💰 سعر الذي تريد ترويجه بة:</label>
-  <input type="number" id="only-promo-price" placeholder="مثال: 30">
-</div>
-
-<button onclick="sendToWhatsApp()">💵 دفع وتسجيل</button>
-
-<a href="https://wa.me/9647727220385?text=عندي%20استفسار%20حول%20التسجيل%20او%20الترويج" 
-   target="_blank" style="position:fixed;bottom:20px;right:20px;z-index:999;">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" 
-       width="60" alt="WhatsApp">
-</a>
-  <button class="button1" onclick="window.location.href='index.html'">رجوع الى صفحة الاساسية</button>
-
-
+  <button type="submit">إرسال البيانات عبر واتساب</button>
+</form>
 
 <script>
-  function toggleSections() {
-    const mode = document.getElementById("mode").value;
-    document.getElementById("register-section").style.display = mode === "register" ? "block" : "none";
-    document.getElementById("promote-section").style.display = mode === "promote" ? "block" : "none";
+$(document).ready(function() {
+  function resetBaghdadSelectors() {
+    $('#baghdad_side, #baghdad_area').val('');
+    $('#baghdadSideLabel, #baghdadAreaLabel').hide();
+    $('#baghdad_side, #baghdad_area').hide();
   }
 
-  document.getElementById("promotion-needed").addEventListener("change", function () {
-    document.getElementById("promo-price-section").style.display = this.value === "نعم" ? "block" : "none";
+  $('#province').change(function() {
+    let province = $(this).val();
+    if (province === 'بغداد') {
+      $('#baghdadSideLabel, #baghdad_side').show();
+    } else {
+      resetBaghdadSelectors();
+      $('#package150').hide();
+      $('#package').val('');
+    }
   });
 
-  function sendToWhatsApp() {
-    const storeName = document.getElementById("store-name").value.trim();
-    const contactNumber = document.getElementById("contact-number").value.trim();
-    const mode = document.getElementById("mode").value;
+  $('#baghdad_side').change(function() {
+    let side = $(this).val();
+    if (side === 'الرصافة') {
+      $('#baghdadAreaLabel, #baghdad_area').show();
+    } else {
+      $('#baghdadAreaLabel, #baghdad_area').hide();
+      $('#baghdad_area').val('');
+      $('#package150').hide();
+      $('#package').val('');
+    }
+  });
 
-    if (!storeName || !contactNumber) {
-      alert("يرجى إدخال اسم البيج ورقم التواصل.");
+  $('#baghdad_area').change(function() {
+    let area = $(this).val();
+    if (area === 'الثالثة') {
+      $('#package150').show();
+    } else {
+      $('#package150').hide();
+      if ($('#package').val() === '150') {
+        $('#package').val('');
+      }
+    }
+  });
+
+  $('#registerForm').submit(function(e) {
+    e.preventDefault();
+
+    // تحقق بسيط من الحقول
+    if (!$('#name').val().trim() || !$('#phone').val().trim() || !$('#province').val() || !$('#package').val() || !$('#promo').val() || !$('#address').val().trim()) {
+      Swal.fire('خطأ', 'يرجى ملء جميع الحقول المطلوبة', 'error');
       return;
     }
 
-    let message = "🔥 طلب جديد:\n\n";
-    message += `📌 اسم البيج: ${storeName}\n📞 رقم التواصل: ${contactNumber}\n\n`;
-
-    if (mode === "register") {
-      const pkg = document.getElementById("package").value;
-      const promo = document.getElementById("promotion-needed").value;
-      message += `🔹 العملية: تسجيل\n🔸 الباقة: ${pkg}$\n⭐ ترويج: ${promo}`;
-
-      if (promo === "نعم") {
-        const price = parseFloat(document.getElementById("product-price").value || 0);
-        if (!price) {
-          alert("يرجى إدخال سعر المنتج.");
-          return;
-        }
-        const finalPrice = price + 3;
-        message += `\n💰 سعر المنتج: ${price}$\n📈 السعر بعد الترويج: ${finalPrice}$`;
-      }
-
-    } else if (mode === "promote") {
-      const price = parseFloat(document.getElementById("only-promo-price").value || 0);
-      if (!price) {
-        alert("يرجى إدخال سعر المنتج.");
+    // تحقق من خيارات بغداد
+    if ($('#province').val() === 'بغداد') {
+      if (!$('#baghdad_side').val()) {
+        Swal.fire('خطأ', 'يرجى اختيار جانب بغداد', 'error');
         return;
       }
-      const finalPrice = price + 3;
-      message += `🔹 العملية: ترويج فقط\n💰 سعر المنتج: ${price}$\n📈 السعر بعد الترويج: ${finalPrice}$`;
+      if ($('#baghdad_side').val() === 'الرصافة' && !$('#baghdad_area').val()) {
+        Swal.fire('خطأ', 'يرجى اختيار المنطقة في الرصافة', 'error');
+        return;
+      }
     }
 
-    const encodedMessage = encodeURIComponent(message);
-    const phone = "07727220385";
-    window.open(`https://wa.me/964${phone.slice(1)}?text=${encodedMessage}`, "_blank");
-  }
+    // تجهيز رسالة واتساب
+    let msg = `تسجيل محل جديد:\n` +
+      `الاسم: ${$('#name').val()}\n` +
+      `الهاتف: ${$('#phone').val()}\n` +
+      `المحافظة: ${$('#province').val()}\n` +
+      ($('#province').val() === 'بغداد' ? `جانب بغداد: ${$('#baghdad_side').val()}\n` : '') +
+      ($('#baghdad_area').val() ? `المنطقة: ${$('#baghdad_area').val()}\n` : '') +
+      `الباقة: ${$('#package option:selected').text()}\n` +
+      `ترويج: ${$('#promo').val()}\n` +
+      `العنوان: ${$('#address').val()}`;
 
-    function toggleSections() {
-    const mode = document.getElementById("mode").value;
-    document.getElementById("register-section").style.display = mode === "register" ? "block" : "none";
-    document.getElementById("promote-section").style.display = mode === "promote" ? "block" : "none";
-  }
+    let phoneNumber = "07727220385"; // رقم الواتساب
 
-  document.getElementById("promotion-needed").addEventListener("change", function () {
-    document.getElementById("promo-price-section").style.display = this.value === "نعم" ? "block" : "none";
+    // ترميز الرابط
+    let whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`;
+
+    // فتح رابط واتساب في نافذة جديدة
+    window.open(whatsappUrl, '_blank');
+
+    // تنبيه نجاح
+    Swal.fire('تم الإرسال', 'تم إرسال البيانات عبر واتساب بنجاح', 'success');
+
+    // إعادة تعيين النموذج
+    $(this)[0].reset();
+    resetBaghdadSelectors();
+    $('#package150').hide();
   });
-
-  async function getUserIP() {
-    try {
-      const res = await fetch("https://api.ipify.org?format=json");
-      const data = await res.json();
-      return data.ip;
-    } catch {
-      return "غير معروف";
-    }
-  }
-
-  async function sendToWhatsApp() {
-    const storeName = document.getElementById("store-name").value.trim();
-    const contactNumber = document.getElementById("contact-number").value.trim();
-    const mode = document.getElementById("mode").value;
-
-    if (!storeName || !contactNumber || mode === "؟") {
-      alert("يرجى تعبئة كافة الحقول المطلوبة.");
-      return;
-    }
-
-    const userIP = await getUserIP();
-    let message = "🔥 طلب جديد للتسجيل:\n\n";
-    message += `📌 اسم البيج/المحل: ${storeName}\n📞 رقم التواصل: ${contactNumber}\n🌐 IP: ${userIP}\n`;
-
-    let total = 0;
-
-    if (mode === "register") {
-      const pkg = document.getElementById("package").value;
-      const promo = document.getElementById("promotion-needed").value;
-
-      if (pkg === "؟" || promo === "؟") {
-        alert("يرجى اختيار الباقة والترويج.");
-        return;
-      }
-
-      const packagePrice = parseFloat(pkg);
-      message += `\n🔹 العملية: تسجيل\n🔸 الباقة: ${packagePrice}$\n⭐ هل تحتاج ترويج؟ ${promo}`;
-      total += packagePrice;
-
-      if (promo === "نعم") {
-        const promoValue = parseFloat(document.getElementById("product-price").value);
-        if (!promoValue || promoValue <= 0) {
-          alert("يرجى إدخال سعر منتج الترويج.");
-          return;
-        }
-        const promoCost = Math.ceil((promoValue / 5) * 2);
-        total += promoCost;
-        message += `\n💰 سعر المنتج: ${promoValue}$\n📢 تكلفة الترويج: ${promoCost}$`;
-      }
-
-    } else if (mode === "promote") {
-      const promoValue = parseFloat(document.getElementById("only-promo-price").value);
-      if (!promoValue || promoValue <= 0) {
-        alert("يرجى إدخال سعر المنتج.");
-        return;
-      }
-      const promoCost = Math.ceil((promoValue / 5) * 2);
-      total += promoCost;
-      message += `\n🔹 العملية: ترويج فقط\n💰 سعر المنتج: ${promoValue}$\n📢 تكلفة الترويج: ${promoCost}$`;
-    }
-
-    message += `\n\n💵 السعر الكلي: ${total}$`;
-
-    const phone = "07727220385";
-    const encodedMessage = encodeURIComponent(message);
-    const link = `https://wa.me/964${phone.slice(1)}?text=${encodedMessage}`;
-    window.open(link, "_blank");
-
-    setTimeout(() => {
-      alert("✅ تم تسجيل الطلب بنجاح.\n📍 IP: " + userIP);
-    }, 1000);
-  }
+});
 </script>
 
 </body>
