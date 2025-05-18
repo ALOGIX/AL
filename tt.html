@@ -320,6 +320,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // عناصر DOM
+            const storeNameInput = document.getElementById('storeName');
             const phoneNumberInput = document.getElementById('phoneNumber');
             const governorateSelect = document.getElementById('governorate');
             const baghdadDistrictGroup = document.getElementById('baghdadDistrictGroup');
@@ -328,6 +329,7 @@
             const rusafaAreaSelect = document.getElementById('rusafaArea');
             const karkhGroup = document.getElementById('karkhGroup');
             const karkhAreaSelect = document.getElementById('karkhArea');
+            const storeDescriptionInput = document.getElementById('storeDescription');
             const operationTypeSelect = document.getElementById('operationType');
             const packageGroup = document.getElementById('packageGroup');
             const packageSelect = document.getElementById('package');
@@ -336,6 +338,10 @@
             const profitCalculation = document.getElementById('profitCalculation');
             const profitAmountSpan = document.getElementById('profitAmount');
             const submitBtn = document.getElementById('submitBtn');
+            const clearBtn = document.getElementById('clearBtn');
+            
+            // تحميل البيانات المحفوظة إذا وجدت
+            loadSavedData();
             
             // منع إدخال أي شيء غير الأرقام في حقل الهاتف
             phoneNumberInput.addEventListener('input', function() {
@@ -355,6 +361,9 @@
                 if (selectedGovernorate === 'بغداد') {
                     baghdadDistrictGroup.classList.remove('hidden');
                 }
+                
+                // حفظ التغييرات
+                saveData();
             });
             
             // تغيير منطقة بغداد
@@ -371,6 +380,9 @@
                 } else if (selectedDistrict === 'الكرخ') {
                     karkhGroup.classList.remove('hidden');
                 }
+                
+                // حفظ التغييرات
+                saveData();
             });
             
             // تغيير نوع العملية
@@ -388,6 +400,9 @@
                 } else if (selectedOperation === 'promote') {
                     promotionGroup.classList.remove('hidden');
                 }
+                
+                // حفظ التغييرات
+                saveData();
             });
             
             // حساب الربح عند تغيير مبلغ الترويج
@@ -401,6 +416,9 @@
                 } else {
                     profitCalculation.classList.add('hidden');
                 }
+                
+                // حفظ التغييرات
+                saveData();
             });
             
             // إرسال النموذج
@@ -410,6 +428,9 @@
                     return;
                 }
                 
+                // حفظ البيانات قبل الإرسال
+                saveData();
+                
                 // إنشاء رسالة الواتساب
                 const whatsappMessage = generateWhatsAppMessage();
                 
@@ -417,20 +438,45 @@
                 sendWhatsAppMessage(whatsappMessage);
             });
             
+            // مسح البيانات
+            clearBtn.addEventListener('click', function() {
+                if (confirm('هل أنت متأكد من رغبتك في مسح جميع البيانات؟')) {
+                    localStorage.removeItem('storeData');
+                    document.getElementById('storeForm').reset();
+                    
+                    // إخفاء جميع العناصر الاختيارية
+                    baghdadDistrictGroup.classList.add('hidden');
+                    rusafaGroup.classList.add('hidden');
+                    karkhGroup.classList.add('hidden');
+                    packageGroup.classList.add('hidden');
+                    promotionGroup.classList.add('hidden');
+                    profitCalculation.classList.add('hidden');
+                }
+            });
+            
+            // حفظ أي تغيير في حقول النموذج
+            document.querySelectorAll('#storeForm input, #storeForm select, #storeForm textarea').forEach(element => {
+                element.addEventListener('change', saveData);
+                element.addEventListener('input', saveData);
+            });
+            
             // التحقق من صحة النموذج
             function validateForm() {
                 let isValid = true;
                 
                 // التحقق من اسم المحل
-                if (!document.getElementById('storeName').value.trim()) {
+                if (!storeNameInput.value.trim()) {
                     alert('الرجاء إدخال اسم المحل');
                     isValid = false;
                 }
                 
                 // التحقق من رقم الهاتف
                 const phoneNumber = phoneNumberInput.value;
-                if (!phoneNumber.startsWith('077') || phoneNumber.length !== 11 || !/^\d+$/.test(phoneNumber)) {
-                    alert('الرجاء إدخال رقم هاتف صحيح يبدأ بـ 077 ويتكون من 11 رقماً');
+                const validPrefixes = ['077', '078', '075'];
+                const startsWithValidPrefix = validPrefixes.some(prefix => phoneNumber.startsWith(prefix));
+                
+                if (!startsWithValidPrefix || phoneNumber.length !== 11 || !/^\d+$/.test(phoneNumber)) {
+                    alert('الرجاء إدخال رقم هاتف صحيح يبدأ بـ 077 أو 078 أو 075 ويتكون من 11 رقماً');
                     isValid = false;
                 }
                 
@@ -459,7 +505,7 @@
                 }
                 
                 // التحقق من الوصف
-                if (!document.getElementById('storeDescription').value.trim()) {
+                if (!storeDescriptionInput.value.trim()) {
                     alert('الرجاء إدخال وصف دقيق للموقع');
                     isValid = false;
                 }
@@ -479,8 +525,8 @@
                 // التحقق من مبلغ الترويج إذا كانت العملية ترويج
                 if (operationTypeSelect.value === 'promote') {
                     const amount = parseFloat(promotionAmountInput.value);
-                    if (!amount || amount <= 0) {
-                        alert('الرجاء إدخال مبلغ ترويج صحيح');
+                    if (!amount || amount <= 0 || amount % 5 !== 0) {
+                        alert('الرجاء إدخال مبلغ ترويج صحيح (من مضاعفات الـ 5 دولار)');
                         isValid = false;
                     }
                 }
@@ -507,7 +553,7 @@
                 
                 // تفاصيل المحل
                 message += "🔹 *تفاصيل المحل:*\n";
-                message += `🏷️ *اسم المحل:* ${document.getElementById('storeName').value}\n`;
+                message += `🏷️ *اسم المحل:* ${storeNameInput.value}\n`;
                 message += `📞 *رقم الهاتف:* ${phoneNumberInput.value}\n`;
                 message += `📍 *الموقع:* ${governorateSelect.value}`;
                 
@@ -522,7 +568,7 @@
                     }
                 }
                 
-                message += `\n📝 *الوصف الدقيق:*\n${document.getElementById('storeDescription').value}\n\n`;
+                message += `\n📝 *الوصف الدقيق:*\n${storeDescriptionInput.value}\n\n`;
                 message += "📅 *تاريخ الطلب:* " + new Date().toLocaleString('ar-IQ') + "\n";
                 message += "شكراً لاختياركم ALOGIX";
                 
@@ -536,6 +582,74 @@
                 
                 // فتح الرابط في نافذة جديدة
                 window.open(whatsappUrl, '_blank');
+            }
+            
+            // حفظ البيانات في localStorage
+            function saveData() {
+                const storeData = {
+                    storeName: storeNameInput.value,
+                    phoneNumber: phoneNumberInput.value,
+                    governorate: governorateSelect.value,
+                    baghdadDistrict: baghdadDistrictSelect.value,
+                    rusafaArea: rusafaAreaSelect.value,
+                    karkhArea: karkhAreaSelect.value,
+                    storeDescription: storeDescriptionInput.value,
+                    operationType: operationTypeSelect.value,
+                    package: packageSelect.value,
+                    promotionAmount: promotionAmountInput.value
+                };
+                
+                localStorage.setItem('storeData', JSON.stringify(storeData));
+            }
+            
+            // تحميل البيانات المحفوظة من localStorage
+            function loadSavedData() {
+                const savedData = localStorage.getItem('storeData');
+                if (savedData) {
+                    const storeData = JSON.parse(savedData);
+                    
+                    // تعبئة الحقول بالبيانات المحفوظة
+                    storeNameInput.value = storeData.storeName || '';
+                    phoneNumberInput.value = storeData.phoneNumber || '';
+                    
+                    if (storeData.governorate) {
+                        governorateSelect.value = storeData.governorate;
+                        
+                        // تشغيل حدث تغيير المحافظة لتحميل المناطق التابعة
+                        governorateSelect.dispatchEvent(new Event('change'));
+                        
+                        if (storeData.governorate === 'بغداد' && storeData.baghdadDistrict) {
+                            baghdadDistrictSelect.value = storeData.baghdadDistrict;
+                            
+                            // تشغيل حدث تغيير منطقة بغداد
+                            baghdadDistrictSelect.dispatchEvent(new Event('change'));
+                            
+                            if (storeData.baghdadDistrict === 'الرصافة' && storeData.rusafaArea) {
+                                rusafaAreaSelect.value = storeData.rusafaArea;
+                            } else if (storeData.baghdadDistrict === 'الكرخ' && storeData.karkhArea) {
+                                karkhAreaSelect.value = storeData.karkhArea;
+                            }
+                        }
+                    }
+                    
+                    storeDescriptionInput.value = storeData.storeDescription || '';
+                    
+                    if (storeData.operationType) {
+                        operationTypeSelect.value = storeData.operationType;
+                        
+                        // تشغيل حدث تغيير نوع العملية
+                        operationTypeSelect.dispatchEvent(new Event('change'));
+                        
+                        if (storeData.operationType === 'register' && storeData.package) {
+                            packageSelect.value = storeData.package;
+                        } else if (storeData.operationType === 'promote' && storeData.promotionAmount) {
+                            promotionAmountInput.value = storeData.promotionAmount;
+                            
+                            // تشغيل حدث تغيير مبلغ الترويج لحساب الربح
+                            promotionAmountInput.dispatchEvent(new Event('input'));
+                        }
+                    }
+                }
             }
         });
     </script>
